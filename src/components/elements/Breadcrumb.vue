@@ -1,0 +1,43 @@
+<template>
+    <nav class="text-center breadcrumb">
+        <span v-for="(item, index) in breadcrumb" :key="index">
+            <router-link v-if="!last || (last && index < breadcrumb.length - 1)"
+             class="link" :to="`${item.link}`">{{ item.text }}</router-link>
+            <span class="link" v-else>{{ last }}</span>
+            <span class="primary-brown" v-if="index < breadcrumb.length - 1">/</span>
+        </span>
+    </nav>
+</template>
+
+<script>
+export default {
+    name: "Breadcrumb",
+
+    data() {
+        return {
+            breadcrumb: this.$route.meta.breadcrumb,
+        }
+    },
+
+    props: {
+        last: {
+            type: String,
+            required: false
+        }
+    },
+
+    methods: {
+        isLast(index) {
+            return index === this.breadcrumb.length - 1;
+        }
+    },
+}
+</script>
+
+<style lang="scss" scoped>
+@import "../../assets/scss/variables.scss";
+
+.link {
+    color: $primary-brown;
+}
+</style>

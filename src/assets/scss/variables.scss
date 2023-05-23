@@ -1,0 +1,100 @@
+@import "./colors.scss";
+
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+
+// Titres et texte
+h2 {
+    font-family: 'Indie Flower', cursive;
+    font-weight: 400;
+    font-size: 2rem;
+    // font-size: 64px;
+
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    line-height: 1.7rem;
+
+    color: $primary-brown;
+}
+
+h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+    // font-size: 32px;
+
+    color: $primary-brown;
+}
+
+p, label {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    // font-size: 24px;
+
+    color: $primary-brown;
+}
+
+strong {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 1.8rem;
+
+    color: $primary-blue;
+}
+
+ul, ol, li {
+    color: $primary-brown;
+}
+
+ul {
+    margin-bottom: 1rem;
+    li {
+        margin-left: -4px;
+        line-height: 1.7rem;
+        ul {
+            li {
+                list-style-type: disc;
+                margin-left: 2rem;
+            }
+        }
+    }
+}
+
+* {
+    &.primary-white {
+        color: $primary-white;
+    }
+    &.primary-yellow {
+        color: $primary-yellow;
+    }
+    &.primary-blue {
+        color: $primary-blue;
+    }
+    &.primary-brown {
+        color: $primary-brown;
+    }
+    &.secondary-green {
+        color: $secondary-green;
+    }
+    &.secondary-blue {
+        color: $secondary-blue;
+    }
+    &.secondary-brown {
+        color: $secondary-brown;
+    }
+    &.secondary-white {
+        color: $secondary-white;
+    }
+}
+
+// Liens
+.link {
+    color: $white;
+    margin: 0 0.5rem;
+
+    &:hover {
+        color: $primary-yellow;
+    }
+}
