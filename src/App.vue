@@ -22,7 +22,7 @@ export default {
 
   methods: {
     handleResize() {
-      this.screenType = window.innerWidth > 768 ? "desktop" : "mobile";
+      this.screenType = window.innerWidth > 838 ? "desktop" : "mobile";
     },
   },
 
