@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
 
 // Titres et texte
-h2 {
+h1, h2 {
     font-family: 'Indie Flower', cursive;
     font-weight: 400;
     font-size: 2rem;
@@ -16,6 +16,7 @@ h2 {
     line-height: 1.7rem;
 
     color: $primary-brown;
+    white-space: nowrap;
 }
 
 h3 {
@@ -25,6 +26,7 @@ h3 {
     // font-size: 32px;
 
     color: $primary-brown;
+    white-space: nowrap;
 }
 
 p, label {

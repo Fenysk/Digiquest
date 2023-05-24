@@ -4,7 +4,7 @@
                     ">
 
         <nav class="flex">
-            <router-link to="/" class="branding">
+            <router-link to="/" class="branding" >
                 <img class="logo" src="@/assets/images/logo/digiquest_blue.svg" alt="Logo DigiQuest">
             </router-link>
 
@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/scss/variables.scss";
+@import "@/assets/scss/variables.scss";
 
 header {
     position: fixed;
@@ -86,7 +86,7 @@ header {
     background-color: $primary-white;
     box-shadow: 0 2px 4px rgba($primary-blue, 0.4);
     width: 100%;
-    min-height: 70px;
+    height: 70px;
     z-index: 1000;
 
     display: flex;

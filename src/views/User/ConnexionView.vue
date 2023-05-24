@@ -6,13 +6,29 @@
         <h2 class="text-center">Connexion</h2>
         <form @submit.prevent="login" class="mt-6">
 
-            <input type="username" id="username" placeholder="Pseudo" v-model="user.username" required autofocus @keyup.enter="$refs.password.focus()" />
+            <input type="username" id="username" placeholder="Pseudo" v-model="user.username" required autofocus/>
 
-            <input type="password" id="password" placeholder="Mot de passe" v-model="user.password" required ref="password" @keyup.enter="login" />
+            <input v-if="isSignUp" type="firstName" id="firstName" placeholder="Prénom" v-model="user.firstName" required />
+
+            <input v-if="isSignUp" type="lastName" id="lastName" placeholder="Nom" v-model="user.lastName" required />
+
+            <input v-if="isSignUp" type="text" id="email" placeholder="Email" v-model="user.email" required />
+
+            <input type="password" id="password" placeholder="Mot de passe" v-model="user.password" required />
+
+            <input v-if="isSignUp" type="date" id="birthDate" placeholder="Date de naissance" v-model="user.birthDate" required />
+
 
             <div class="flex justify-center mt-4">
-                <Button :text="'Se connecter'" type="submit" class="cursor-pointer" @click="login" />
-                <Button :text="'S\'inscrire'" type="submit" class="cursor-pointer" @click="signup" secondary />
+                <Button class="cursor-pointer"
+                    :text="isSignUp ? 'S\'inscrire' : 'Se connecter'"
+                    @click="isSignUp ? signup() : login()"
+                />
+                <Button class="cursor-pointer"
+                    :text="isSignUp ? 'J\ai déjà un compte' : 'Je n\'ai pas de compte'"
+                    @click="switchMode" 
+                    secondary
+                />
             </div>
 
         </form>
@@ -23,7 +39,6 @@
 import axios from "axios";
 
 import Button from "../../components/elements/Button.vue";
-import { render } from "vue";
 
 export default {
     name: "ConnexionView",
@@ -34,13 +49,33 @@ export default {
         return {
             user: {
                 username: '',
+                firstName: '',
+                lastName: '',
+                email: '',
                 password: '',
+                birthDate: '',
+                birthDateFormatted: '',
             },
             token: '',
+
+            isSignUp: false,
         };
     },
 
+    watch: {
+        'user.birthDate': function (val) {
+            console.log(val);
+            this.user.birthDateFormatted = val + 'T12:00:00.000Z';
+        }
+    },
+
     methods: {
+
+        switchMode() {
+            this.isSignUp = !this.isSignUp;
+            console.log(this.isSignUp);
+        },
+
         async login() {
             const apiUrl = 'https://digiquest-back.herokuapp.com';
             axios.post(`${apiUrl}/login`,
@@ -72,10 +107,10 @@ export default {
                 {
                     "username": this.user.username,
                     "password": this.user.password,
-                    "email": "test4",
-                    "firstName": "Test4",
-                    "lastName": "Test4",
-                    "birthDate": "2000-04-22T05:35:00.543Z"
+                    "email": this.user.email,
+                    "firstName": this.user.firstName,
+                    "lastName": this.user.lastName,
+                    "birthDate": this.user.birthDateFormatted,
                 },
                 {
                     headers: {
@@ -86,7 +121,9 @@ export default {
                     console.log(response.data);
                     localStorage.setItem('token', response.token);
                     this.token = response.data.token;
-                    this.$router.push('/my-account');
+                    this.$nextTick(() => {
+                        window.location.reload();
+                    })
                 })
                 .catch(error => {
                     console.log(error);

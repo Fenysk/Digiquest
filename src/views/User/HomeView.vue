@@ -11,7 +11,7 @@
                 <h2>Qui sommes-nous ?</h2>
                 <p v-html="about_text"></p>
             </div>
-            <img src="../../assets/images/christina-wocintechchat-com-LQ1t-8Ms5PY-unsplash.jpg" alt="" />
+            <img src="../../assets/images/photos/christina-wocintechchat-com-LQ1t-8Ms5PY-unsplash.jpg" alt="" />
         </section>
 
         <section class="facts">
@@ -38,7 +38,7 @@
                     <h3 class="text-center my-4">{{ article.title }}</h3>
                     <p v-html="truncateHTML(article.content, 200)"></p>
                     <div class="flex justify-center">
-                        <Button :text="'Lire l\'article'" :href="'/blog/' + article.id" secondary />
+                        <Button :text="'Lire l\'article'" :href="'/blog/article/' + article.id" secondary />
                     </div>
                 </article>
             </div>
@@ -50,11 +50,11 @@
 </template>
 
 <script>
-import { getArticles } from "../../api/Article/getArticles";
+import { getArticles } from "@/api/Article/getArticles";
 
-import Quizz from "../../assets/quizz/Quizz.vue";
-import Button from "../../components/elements/Button.vue";
-import data from "../../assets/data.json";
+import Quizz from "@/assets/quizz/Quizz.vue";
+import Button from "@/components/elements/Button.vue";
+import data from "@/assets/data.json";
 
 export default {
     name: "HomeView",
@@ -82,7 +82,7 @@ export default {
     mounted() {
         getArticles()
             .then((articles) => {
-                this.articles = articles.slice(-4).reverse();
+                this.articles = articles.slice(-6).reverse();
             })
             .catch((error) => {
                 console.error('Erreur lors de la récupération des articles:', error);
@@ -93,7 +93,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/scss/variables.scss";
+@import "@/assets/scss/variables.scss";
 
 #home {
     background-color: $primary-white;
@@ -106,7 +106,7 @@ export default {
 
     min-height: 60vh;
 
-    background-image: url("../../assets/images/markus-spiske-97Rpu-UmCaY-unsplash.jpg");
+    background-image: url("@/assets/images/photos/markus-spiske-97Rpu-UmCaY-unsplash.jpg");
     background-size: cover;
     background-position: center;
 
