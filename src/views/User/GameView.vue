@@ -7,7 +7,24 @@
         <div>
           <!-- Progress Bar -->
           <div>
-            ProgressBar
+            ProgressBar: {{ progress.toFixed(0) }} % 
+            <div div="display: flex; flex-direction: row; width: 600px;">
+
+              <!-- Repeted section + star -->
+              <div v-for="item,index of [0,1,2,3]" :key="index" style=" display: flex;width: 24%;">
+                <div style="height: 10px; width:90%; background-color: white;border:black 1px solid;">
+
+                  <!-- Progress Section -->
+                  <div style="height: 100%; background-color: yellow; transition: width 0.3s;" :style="{width: sectionsProgress[index].toFixed(0) +'%', transitionDelay: index*0.3 + 's'}"></div>
+
+
+                </div>
+                <!-- Progress Star -->
+                <div style="height: 10px; width:10px; border:1px solid black; border-radius: 50%;" :style="{backgroundColor: starColors[index]}"></div>
+              </div>
+
+
+            </div>
           </div>
           <!-- End Progress Bar -->
 
@@ -25,6 +42,9 @@
                 <button type="button" @click="answerClicked(index)"> {{ scenario[currentStep].answers[index] }} </button> <br>
               </div>
             </div>
+          </div>
+          <div v-else>
+            Fin du jeu!
           </div>
           answers: {{ answers }}
           <!-- End Main Game -->
@@ -70,6 +90,26 @@ export default {
           return 0.0
         }
         return ( this.currentStep / this.scenario.length ) * 100.0
+      },
+      sectionsProgress() {
+        console.log(this.progress)
+        let progresses = [];
+        for (let i = 0; i < 4; i++){
+          const progress = Math.min(Math.max(this.progress- i*25,0),25) * 4
+          progresses.push(progress)
+        }
+        console.log(progresses)
+
+        return progresses;
+
+      },
+      starColors() {
+        let stars = [];
+        for (let i = 0; i < 4; i++){
+          const status = (this.progress >= i * 25) ? 'rgb(255, 217, 0)' : 'rgba(231, 197, 0, 0.666)'
+          stars.push(status)
+        }
+        return stars;
       }
     },
     methods: {
@@ -77,11 +117,10 @@ export default {
         // store answer
         this.answers.push(index)
         // proceed to next step
-        if (this.currentStep === this.scenario.length -1) {
-          // handle end of game
-        } else {
-          // handle nextStep
-          this.currentStep += 1;
+        this.currentStep += 1;
+        // handle end of game
+        if (this.currentStep === this.scenario.length) {
+          this.finishedGame = true;
         }
       },
     }
@@ -90,5 +129,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/scss/variables.scss";
-
 </style>
