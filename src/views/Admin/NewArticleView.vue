@@ -19,8 +19,6 @@
 
             <button type="submit">Créer</button>
         </form>
-
-        {{ article.content }}
     </div>
 </template>
   

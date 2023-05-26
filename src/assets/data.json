@@ -44,8 +44,9 @@
     "professionnals" : [
         {
             "id": 1,
-            "lastName": "Dupont",
-            "firstName": "Albert",
+            "lastName": "Arató",
+            "firstName": "András",
+            "photo": "https://www.meme-arsenal.com/memes/c333d9b3995622e68370b5753eb9ab77.jpg",
             "specialities": [
                 "Pédiatrie néonatologie",
                 "Néonatologie"
