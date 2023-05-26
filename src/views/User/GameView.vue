@@ -92,13 +92,11 @@ export default {
         return ( this.currentStep / this.scenario.length ) * 100.0
       },
       sectionsProgress() {
-        console.log(this.progress)
         let progresses = [];
         for (let i = 0; i < 4; i++){
           const progress = Math.min(Math.max(this.progress- i*25,0),25) * 4
           progresses.push(progress)
         }
-        console.log(progresses)
 
         return progresses;
 
