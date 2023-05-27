@@ -15,7 +15,7 @@
                 <div style="height: 10px; width:90%; background-color: white;border:black 1px solid;">
 
                   <!-- Progress Section -->
-                  <div style="height: 100%; background-color: yellow; transition: width 0.3s;" :style="{width: sectionsProgress[index].toFixed(0) +'%', transitionDelay: index*0.3 + 's'}"></div>
+                  <div style="height: 100%; background-color: yellow; transition: width 0.3s;" :style="{width: sectionsProgress[index].toFixed(0) +'%', 'transition-delay': (progress >= (index+1) * 25) ? '0' : '0.4s'}"></div>
 
 
                 </div>
@@ -76,8 +76,16 @@ export default {
             answers: ["Answers 2-1", "Answers 2-2", "Answers 3-3", "Answers 4-4"]
           },
           { 
-            question: "question # 1",
+            question: "question # 3",
             answers: ["Answers 3-1", "Answers 3-2", "Answers 3-3", "Answers 3-4"]
+          },
+          { 
+            question: "question # 4",
+            answers: ["Answers 4-1", "Answers 4-2", "Answers 4-3", "Answers 4-4"]
+          },
+                    { 
+            question: "question # 5",
+            answers: ["Answers 5-1", "Answers 5-2", "Answers 5-3", "Answers 5-4"]
           },
         ],
         answers: []
