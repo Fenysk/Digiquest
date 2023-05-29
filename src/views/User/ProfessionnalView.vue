@@ -27,7 +27,7 @@
                 <h3 class="text-center">Coordonnées</h3>
                 <p class="mt-8">{{ professionnal.adresse }}</p>
                 <p class="mt-4">{{ professionnal.phone }}</p>
-                <Button :text="'Prendre rendez-vous'" :href="`mailto:${professionnal.email}`" secondary class="cursor-pointer"/>
+                <Button :text="'Prendre rendez-vous'" :href="`mailto:${professionnal.email}`" secondary class="cursor-pointer" />
             </div>
         </div>
     </div>
