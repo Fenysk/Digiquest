@@ -8,11 +8,11 @@
           <!-- Progress Bar -->
           <div>
             ProgressBar: {{ progress.toFixed(0) }} % 
-            <div div="display: flex; flex-direction: row; width: 600px;">
+            <div style="display: flex; flex-direction: row; width: 600px;">
 
               <!-- Repeted section + star -->
-              <div v-for="item,index of [0,1,2,3]" :key="index" style=" display: flex;width: 24%;">
-                <div style="height: 10px; width:90%; background-color: white;border:black 1px solid;">
+              <div v-for="item,index of [0,1,2,3]" :key="index" style="display: flex;width: 150px; justify-content: space-around;align-items: center;">
+                <div style="display: inline-block;height: 10px; width:130px; background-color: white;border:black 1px solid;">
 
                   <!-- Progress Section -->
                   <div style="height: 100%; background-color: yellow; transition: width 0.3s;" :style="{width: sectionsProgress[index].toFixed(0) +'%', 'transition-delay': (progress >= (index+1) * 25) ? '0' : '0.4s'}"></div>
@@ -20,7 +20,7 @@
 
                 </div>
                 <!-- Progress Star -->
-                <div style="height: 10px; width:10px; border:1px solid black; border-radius: 50%;" :style="{backgroundColor: starColors[index]}"></div>
+                <div style="height: 24px; width: 24px; border:1px solid black; border-radius: 50%; transition: background-color s 0.4s;" :style="{backgroundColor: starColors[index]}"></div>
               </div>
 
 
@@ -112,7 +112,7 @@ export default {
       starColors() {
         let stars = [];
         for (let i = 0; i < 4; i++){
-          const status = (this.progress >= i * 25) ? 'rgb(255, 217, 0)' : 'rgba(231, 197, 0, 0.666)'
+          const status = (this.progress >= (i+1) * 25) ? 'rgba(255, 255, 0, 1.0)' : 'rgba(255, 255, 0, 0.2)'
           stars.push(status)
         }
         return stars;
