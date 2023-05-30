@@ -1,19 +1,28 @@
 <template>
-    <div id="article" class="
-                xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16
-                ">
+    <div id="article" class="pt-16">
         <h2 class="text-center">{{ article.title }}</h2>
         <Breadcrumb :last="article.title" />
 
-        <article class="mt-4">
+        <article
+            class="mt-4 xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300"
+        >
             <img :src="article.image" alt="" />
             <div class="mt-4 article-content" v-html="article.content" />
         </article>
 
         <div class="flex justify-center mt-8">
             <Button :text="'Retour à la liste des articles'" :href="'/blog'" />
-            <Button :text="'Aller en haut de la page'" :href="'#article'" secondary />
+            <Button
+                :text="'Aller en haut de la page'"
+                :href="'#article'"
+                secondary
+            />
         </div>
+
+        <Comments
+            class="xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300"
+            :articleId="article.id"
+        />
     </div>
 </template>
 
@@ -22,15 +31,16 @@ import { getArticle } from "../../api/Article/getArticle";
 
 import Breadcrumb from "../../components/elements/Breadcrumb.vue";
 import Button from "../../components/elements/Button.vue";
+import Comments from "@/components/elements/Comments.vue";
 
 export default {
     name: "ArticleView",
-    components: { Breadcrumb, Button },
+    components: { Breadcrumb, Button, Comments },
 
     data() {
         return {
             article: {},
-        }
+        };
     },
 
     mounted() {
@@ -40,10 +50,13 @@ export default {
                 this.article = article;
             })
             .catch((error) => {
-                console.error('Erreur lors de la récupération des articles:', error);
+                console.error(
+                    "Erreur lors de la récupération des articles:",
+                    error
+                );
             });
-    }
-}
+    },
+};
 </script>
 
 <style lang="scss" scoped>
