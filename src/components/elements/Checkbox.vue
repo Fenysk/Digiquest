@@ -41,6 +41,7 @@ export default {
 
 i {
     color: $primary-brown;
+    font-size: 24px;
 }
 
 p {

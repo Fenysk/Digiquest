@@ -1,22 +1,77 @@
 {
-    "about_text": "Lorem ipsum, dolor sit amet consectetur adipisicing <strong>elit</strong>. Optio rem nobis error vitae maxime, repellatsapiente, aliquam blanditiis dolore nihil illo quisquam modi saepeequi itaque dignissimos. Obcaecati, deleniti vitae quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque molestias deleniti provident <strong>eligendi</strong> ! Animi itaque id quam autem eum, dicta ea maiores commodi nihil inventore ipsam dolorum expedita consequuntur vel?",
-    
-    "facts": [
-        "3.5 à 5.6% des enfants scolarisés seraient atteint du TDAH en France, et 2 à 4% des adultes.",
-        "Le TDAH est un trouble neurodéveloppemental qui se manifeste par des difficultés d’attention, d’impulsivité et d’hyperactivité."
-    ],
-
-    "testimonies": [
+    "quizz": [
         {
-            "text": "Lorem ipsum dolor sit amet consectetur adipi elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-            "author": "Auteur 1 - Spécialité"
+            "question": "Quel est le pourcentage de personnes atteintes de TDAH en France ?",
+            "choices": [
+                {
+                    "text": "Entre 3,5% et 5,6%",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Entre 1% et 2%",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Entre 5% et 7%",
+                    "isCorrect": false
+                }
+            ]
         },
         {
-            "text": "Lorem ipsum dolor sit amet consectetur adipi elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-            "author": "Auteur 2 - Spécialité"
+            "question": "Comment les médecins français caractérisent-ils généralement le TDAH ?",
+            "choices": [
+                {
+                    "text": "Comme un trouble biologique",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Comme un trouble sociologique",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Comme un trouble psychologique",
+                    "isCorrect": true
+                }
+            ]
+        },
+        {
+            "question": "Comment le taux de prévalence du TDAH chez les enfants en France se compare-t-il à celui des États-Unis",
+            "choices": [
+                {
+                    "text": "Le taux est plus élevé en France",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Le taux est similaire dans les deux pays",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Le taux est plus élevé aux États-Unis",
+                    "isCorrect": true
+                }
+            ]
         }
     ],
-
+    "about_text": "<strong>DigiQuest</strong> est une association loi 1901 basée à Lyon, créée en janvier 2023, qui propose une plateforme numérique <strong>ludique</strong> pour sensibiliser et informer sur le <strong>TDAH</strong>.<br>Notre équipe de 6 bénévoles a pour objectif d'<strong>inclure</strong> les enfants, leurs parents et les associations concernées par ce trouble en fournissant des <strong>ressources</strong> et des <strong>jeux</strong>.",
+    "facts": [
+        "En France, entre 3,5% et 5,6% des personnes sont atteintes de TDAH.",
+        "En France, environ 3,5% des personnes atteintes de TDAH reçoivent un traitement.",
+        "Une étude portant sur 129 enfants atteints de TDAH a révélé que les taux d'hospitalisation et de traitement se situaient entre 56,4% et 60,1%."
+    ],
+    "testimonies": [
+        {
+            "text": "Les jeux interactifs de DigiQuest captivent mes élèves atteints de TDAH, favorisant leur engagement et leur apprentissage. C'est un outil précieux pour l'inclusion en classe.",
+            "author": "Sarah - Enseignante en école primaire"
+        },
+        {
+            "text": "DigiQuest m'a offert des jeux captivants et une communauté en ligne où je me sens compris et soutenu. Cela a eu un impact positif sur ma vie avec le TDAH.",
+            "author": " Lucas - Adolescent atteint de TDAH"
+        },
+        {
+            "text": "DigiQuest nous a aidés à mieux comprendre le TDAH de notre enfant grâce à des jeux et des ressources adaptés. C'est un allié précieux pour soutenir notre famille.",
+            "author": "Marie - Maman d'un enfant atteint de TDAH"
+        }
+    ],
     "ressources": [
         {
             "id": 1,
@@ -40,8 +95,7 @@
             "tags": []
         }
     ],
-
-    "professionnals" : [
+    "professionnals": [
         {
             "id": 1,
             "lastName": "Arató",

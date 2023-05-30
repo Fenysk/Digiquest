@@ -16,16 +16,16 @@
 
         <section class="facts">
             <div class="content xl:px-96 lg:px-64 md:px-32 sm:px-16 px-4 ease-in-out duration-300 py-16">
-                <h2>{{ facts[0] }}</h2>
+                <h2>{{ facts[randomFact] }}</h2>
             </div>
         </section>
 
         <section class="testimonies xl:px-96 lg:px-64 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16">
             <h2 class="text-center">Témoignages</h2>
             <blockquote>
-                <p class="text-center"><span class="quote-char">“</span>{{ testimonies[0].text }}<span
+                <p class="text-center"><span class="quote-char">“</span>{{ testimonies[randomTestimonie].text }}<span
                         class="quote-char">„</span></p>
-                <footer class="text-center mt-2">{{ testimonies[0].author }}</footer>
+                <footer class="text-center mt-2">{{ testimonies[randomTestimonie].author }}</footer>
             </blockquote>
         </section>
 
@@ -64,7 +64,9 @@ export default {
         return {
             about_text: data.about_text,
             facts: data.facts,
+            randomFact: 0,
             testimonies: data.testimonies,
+            randomTestimonie: 0,
             articles: [],
         }
     },
@@ -87,7 +89,12 @@ export default {
             .catch((error) => {
                 console.error('Erreur lors de la récupération des articles:', error);
             });
-    }
+    },
+
+    created() {
+        this.randomTestimonie = Math.floor(Math.random() * this.testimonies.length);
+        this.randomFact = Math.floor(Math.random() * this.facts.length);
+    },
 
 };
 </script>
@@ -149,6 +156,7 @@ export default {
             line-height: 3rem;
             text-align: center;
             color: $primary-blue;
+            white-space: break-spaces;
         }
     }
 }
@@ -168,6 +176,7 @@ export default {
         }
 
         footer {
+            font-size: 20px;
             font-weight: bold;
             color: $primary-brown;
         }
@@ -180,7 +189,7 @@ export default {
 
     &_container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         grid-gap: 20px;
 
         article {
