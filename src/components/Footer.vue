@@ -87,6 +87,10 @@ export default {
 
             usefulLinks: [
                 {
+                    title: "Plan du site",
+                    link: "/plan-du-site",
+                },
+                {
                     title: "Faire un don",
                     link: "/donnation",
                 },

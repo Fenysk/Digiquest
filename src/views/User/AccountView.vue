@@ -117,7 +117,7 @@ export default {
 
     mounted() {
         if (localStorage.getItem('token') === null) {
-            this.$router.push('/');
+            this.$router.push('/connexion');
         } else {
             const token = localStorage.getItem('token');
             const profileId = jwtDecode(token).userId;
