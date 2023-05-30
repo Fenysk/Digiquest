@@ -2,11 +2,11 @@
     <div id="contact" class="
     xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16
     ">
-        <h2 class="text-center">Vous souhaitez nous contactez ?</h2>
+        <h1 class="text-center">Vous souhaitez nous contactez ?</h1>
         <Breadcrumb />
-        <h3 class="mt-8 text-center">Vous pouvez nous contacter via ce formulaire</h3>
+        <h2 class="mt-8 text-center">Vous pouvez nous contacter via ce formulaire</h2>
 
-        <form class="mt-8">
+        <form class="mt-16">
             <div class="flex flex-row items-center space-x-4" v-if="!isConnected">
                 <div class="flex flex-col">
                     <label>Votre Prénom</label>

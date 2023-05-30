@@ -2,10 +2,10 @@
     <div
         class="connexion xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16"
     >
-        <h2 class="text-center">
+        <h1 class="text-center">
             {{ isSignUp ? "Inscription" : "Connexion" }}
-        </h2>
-        <form @submit.prevent="isSignUp ? signup() : login()">
+        </h1>
+        <form class="mt-16" @submit.prevent="isSignUp ? signup() : login()">
             <input
                 type="username"
                 id="username"

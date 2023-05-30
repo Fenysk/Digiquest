@@ -3,11 +3,11 @@
     account-view
     xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16
     ">
-        <h2 class="text-center">Bonjour {{ profile.firstName }} !</h2>
+        <h1 class="text-center">Bonjour {{ profile.firstName }} !</h1>
 
-        <div class="avatar">
-            <h3 class="text-center mt-8 mb-8">Personnalise ton avatar</h3>
-            <div class="container flex flex-row wrap gap-32">
+        <div class="avatar mt-20">
+            <h2 class="text-center mt-8 mb-8">Personnalise ton avatar</h2>
+            <div class="container flex flex-row wrap gap-32 mt-16">
                 <div class="animals">
                     <p class="text-center mb-4">Choisis ton animal</p>
 
@@ -30,8 +30,8 @@
             <Button :text="'Valider'" class="cursor-pointer" />
         </div>
 
-        <div class="personal-informations">
-            <h3 class="text-center mt-8">Informations personnelles</h3>
+        <div class="personal-informations mt-16">
+            <h2 class="text-center">Informations personnelles</h2>
 
             <div class="inputs flex flex-col justify-center">
                 <input type="text" placeholder="Prénom" class="mt-4" v-model="profile.firstName" />

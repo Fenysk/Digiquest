@@ -1,12 +1,12 @@
 <template>
     <div id="article" class="pt-16">
-        <h2 class="text-center">{{ article.title }}</h2>
+        <h1 class="text-center">{{ article.title }}</h1>
         <Breadcrumb :last="article.title" />
 
         <article
             class="mt-4 xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300"
         >
-            <img :src="article.image" alt="" />
+            <img :src="article.image" :alt="article.title" />
             <div class="mt-4 article-content" v-html="article.content" />
         </article>
 
@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import { getArticle } from "../../api/Article/getArticle";
+import { getArticle } from "@/api/Article/getArticle";
 
-import Breadcrumb from "../../components/elements/Breadcrumb.vue";
-import Button from "../../components/elements/Button.vue";
+import Breadcrumb from "@/components/elements/Breadcrumb.vue";
+import Button from "@/components/elements/Button.vue";
 import Comments from "@/components/elements/Comments.vue";
 
 export default {
@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/scss/variables.scss";
+@import "@/assets/scss/variables.scss";
 
 #article {
     background-color: $primary-white;
@@ -69,13 +69,15 @@ export default {
         width: 100%;
         aspect-ratio: 2/1;
         object-fit: cover;
+        object-position: center;
         border-radius: 10px;
+        max-height: 40vh;
     }
 }
 </style>
 
 <style lang="scss">
-@import "../../assets/scss/variables.scss";
+@import "@/assets/scss/variables.scss";
 
 .article-content {
     h3 {

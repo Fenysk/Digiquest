@@ -93,6 +93,10 @@ export default {
         font-size: 1.2rem;
     }
 
+    p {
+        font-size: 20px;
+    }
+
     .text {
         white-space: nowrap;
         line-height: 1;
