@@ -1,8 +1,7 @@
 <template>
-    <div class="
-    account-view
-    xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16
-    ">
+    <div
+        class="account-view xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16"
+    >
         <h1 class="text-center">Bonjour {{ profile.firstName }} !</h1>
 
         <div class="avatar mt-20">
@@ -12,16 +11,29 @@
                     <p class="text-center mb-4">Choisis ton animal</p>
 
                     <div class="grille">
-                        <article v-for="animal in animals" :key="animal" class="animal">
-                            <p>{{ animal }}</p>
-                        </article>
+                        <a
+                            v-for="animal in animals"
+                            :key="animal"
+                            @click.prevent
+                            href=""
+                            class="animal cursor-pointer"
+                        >
+                            <img
+                                :src="require(`@/assets/picto/animals/${animal}.svg`)"
+                                :alt="animal"
+                            />
+                        </a>
                     </div>
                 </div>
                 <div class="colors">
                     <p class="text-center mb-4">Choisis ta couleur</p>
 
                     <div class="grille">
-                        <article v-for="color in colors" :key="color" class="color">
+                        <article
+                            v-for="color in colors"
+                            :key="color"
+                            class="color"
+                        >
                             <p>{{ color }}</p>
                         </article>
                     </div>
@@ -34,9 +46,24 @@
             <h2 class="text-center">Informations personnelles</h2>
 
             <div class="inputs flex flex-col justify-center">
-                <input type="text" placeholder="Prénom" class="mt-4" v-model="profile.firstName" />
-                <input type="text" placeholder="Nom" class="mt-4" v-model="profile.lastName" />
-                <input type="email" placeholder="Email" class="mt-4" v-model="profile.email" />
+                <input
+                    type="text"
+                    placeholder="Prénom"
+                    class="mt-4"
+                    v-model="profile.firstName"
+                />
+                <input
+                    type="text"
+                    placeholder="Nom"
+                    class="mt-4"
+                    v-model="profile.lastName"
+                />
+                <input
+                    type="email"
+                    placeholder="Email"
+                    class="mt-4"
+                    v-model="profile.email"
+                />
             </div>
 
             <div class="flex justify-center mt-4">
@@ -44,11 +71,17 @@
             </div>
         </div>
 
-        <Button secondary :text="'Se déconnecter'" class="cursor-pointer" @click="logout" />
+        <Button
+            secondary
+            :text="'Se déconnecter'"
+            class="cursor-pointer"
+            @click="logout"
+        />
     </div>
 </template>
 
 <script>
+
 import { getProfile } from "@/api/User/getProfile";
 import jwtDecode from "jwt-decode";
 
@@ -62,25 +95,25 @@ export default {
     data() {
         return {
             profile: {},
-            dateDeNaissance: '',
+            dateDeNaissance: "",
 
             animals: [
-                "Hérisson",
-                "Écureuil",
-                "Renard",
-                "Castor",
-                "Colibri",
-                "Kiwi",
-                "Libellule",
-                "Papillon",
-                "Poisson",
-                "Poisson-globe",
-                "Loutre",
-                "Tortue",
-                "Lion",
-                "Panda",
-                "Singe",
-                "Licorne",
+                "hedgehog",
+                "squirrel",
+                "fox",
+                "beaver",
+                "hummingbird",
+                "kiwi",
+                "dragonfly",
+                "butterfly",
+                "fish",
+                "pufferfish",
+                "otter",
+                "turtle",
+                "lion",
+                "panda",
+                "monkey",
+                "unicorn",
             ],
 
             colors: [
@@ -101,25 +134,25 @@ export default {
                 "Noir",
                 "Blanc",
             ],
-        }
+        };
     },
 
     methods: {
         logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('profileId');
-            this.$router.push('/');
+            localStorage.removeItem("token");
+            localStorage.removeItem("profileId");
+            this.$router.push("/");
             this.$nextTick(() => {
                 window.location.reload();
             });
-        }
+        },
     },
 
     mounted() {
-        if (localStorage.getItem('token') === null) {
-            this.$router.push('/connexion');
+        if (localStorage.getItem("token") === null) {
+            this.$router.push("/connexion");
         } else {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem("token");
             const profileId = jwtDecode(token).userId;
 
             getProfile(profileId)
@@ -127,11 +160,14 @@ export default {
                     this.profile = profile;
                 })
                 .catch((error) => {
-                    console.error('Erreur lors de la récupération du profil:', error);
+                    console.error(
+                        "Erreur lors de la récupération du profil:",
+                        error
+                    );
                 });
         }
-    }
-}
+    },
+};
 </script>
 
 <style lang="scss" scoped>
