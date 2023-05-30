@@ -1,7 +1,7 @@
 <template>
     <div id="home">
         <section class="banner xl:px-96 lg:px-64 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16">
-            <div class="content">
+            <div class="container">
                 <Quizz />
             </div>
         </section>
@@ -117,7 +117,7 @@ export default {
     background-size: cover;
     background-position: center;
 
-    .content {
+    .container {
         padding: 32px;
         background-color: rgba($primary-white, 0.8);
         backdrop-filter: blur(5px);

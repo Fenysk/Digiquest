@@ -4,9 +4,9 @@
                     ">
 
         <nav class="flex">
-            <router-link to="/" class="branding" >
+            <a href="/" class="branding" >
                 <img class="logo" src="@/assets/logo/digiquest_blue.svg" alt="Logo DigiQuest">
-            </router-link>
+            </a>
 
             <ul class="flex menu menu--primary">
                 <li>
@@ -42,9 +42,9 @@
                     xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300
                     ">
         <nav class="flex">
-            <div class="branding">
+            <a href="/" class="branding">
                 <img class="logo" src="@/assets/logo/digiquest_blue.svg" alt="Logo DigiQuest">
-            </div>
+            </a>
 
             <div class="burger">
 

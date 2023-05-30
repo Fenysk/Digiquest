@@ -22,7 +22,13 @@ export default {
 
   methods: {
     handleResize() {
-      this.screenType = window.innerWidth > 838 ? "desktop" : "mobile";
+      if (window.innerWidth > 1024) {
+        this.screenType = "desktop";
+      } else if (window.innerWidth > 768) {
+        this.screenType = "tablet";
+      } else {
+        this.screenType = "mobile";
+      }
     },
   },
 

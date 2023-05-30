@@ -1,33 +1,51 @@
 <template>
     <div class="quizz">
-        <h2>Le saviez-vous ?</h2>
+        <h2>D'après-vous ?</h2>
 
         <div class="content">
-            <div class="question-container">
-                <p class="question">
-                    {{ question }}
+            <div v-if="!answered">
+                <div class="question-container">
+                    <p class="question">{{ question }}</p>
+                </div>
+
+                <div class="choices-container">
+                    <Checkbox
+                        v-for="(choice, index) in choices"
+                        :key="index"
+                        v-model="choice.isChecked"
+                        :label="choice.text"
+                        @click="setOtherChoicesFalse(choice)"
+                    />
+                </div>
+
+                <div class="validate">
+                    <Button
+                        text="Valider"
+                        secondary
+                        @click="validate"
+                        class="cursor-pointer"
+                    />
+                </div>
+            </div>
+
+            <div v-else>
+                <p class="result">
+                    {{ isCorrect ? "Bonne réponse !" : "Mauvaise réponse !" }}
                 </p>
-            </div>
-
-            <div class="choices-container">
-                <Checkbox
-                    v-for="(choice, index) in choices"
-                    :key="index"
-                    v-model="choice.checked"
-                    :label="choice.text"
-                    :modelValue="choice.checked"
-                    @click="isSelected(choice)"
+                <p class="additional-info">{{ additionalInfo }}</p>
+                <Button
+                    v-if="source"
+                    :text="'En savoir plus...'"
+                    primary
+                    :href="source"
+                    class="cursor-pointer"
                 />
-            </div>
-
-            <div class="validate">
-                <Button text="Valider" secondary @click="validate()" />
             </div>
         </div>
     </div>
 </template>
-
-<script>
+  
+  <script>
 import data from "@/assets/data.json";
 
 import Checkbox from "@/components/elements/Checkbox.vue";
@@ -46,27 +64,40 @@ export default {
             questions: data.quizz,
             question: "",
             choices: [],
-
+            answered: false,
+            isCorrect: false,
+            additionalInfo: "",
+            source: "",
             randomQuestion: 0,
         };
     },
 
     methods: {
-        isSelected(choice) {
-            this.choices.forEach((choice) => {
-                choice.checked = false;
-            });
-            choice.checked = true;
-        },
-
         validate() {
-            if (this.choices.some((choice) => choice.checked)) {
-                this.showAnswer();
+            const selectedChoice = this.choices.find(
+                (choice) => choice.isChecked
+            );
+            if (selectedChoice) {
+                this.showAnswer(selectedChoice);
             }
         },
 
-        showAnswer() {
-            
+        showAnswer(selectedChoice) {
+            this.answered = true;
+            const correctAnswer =
+                this.questions[this.randomQuestion].correctAnswer;
+            this.isCorrect = selectedChoice.text === correctAnswer;
+            this.additionalInfo =
+                this.questions[this.randomQuestion].additionalInfo;
+            this.source = this.questions[this.randomQuestion].source;
+        },
+
+        setOtherChoicesFalse(selectedChoice) {
+            this.choices.forEach((choice) => {
+                if (choice !== selectedChoice) {
+                    choice.isChecked = false;
+                }
+            });
         },
     },
 
@@ -77,41 +108,46 @@ export default {
     },
 };
 </script>
-
+  
 <style lang="scss" scoped>
+@import "@/assets/scss/variables.scss";
 .quizz {
     display: flex;
     flex-flow: column nowrap;
 
-    .content {
+    .content > div {
         display: flex;
         gap: 32px;
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
         justify-content: space-between;
         align-items: center;
-
-        //mobile version
-        @media (max-width: 838px) {
-        }
+        text-align: center;
 
         .question-container {
             flex: 1;
+            min-width: 35%;
         }
         .choices-container {
             flex: 1;
         }
     }
+
+    .result {
+        font-weight: bold;
+        text-align: center;
+        color: $secondary-green;
+    }
 }
 </style>
-
+  
 <style lang="scss">
 .mobile {
     .quizz {
         h2 {
             text-align: center;
         }
-        .content {
-            flex-flow: column nowrap;
+        .content > div {
+            flex-flow: column nowrap !important;
             gap: 16px;
 
             .question-container {
