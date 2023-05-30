@@ -21,9 +21,9 @@
                 <li>
                     <MenuButton type="blog" link="/blog" />
                 </li>
-                <li>
-                    <MenuButton type="contact" link="/contact-us" />
-                </li>
+                <!-- <li>
+                    <MenuButton type="search" link="/search" />
+                </li> -->
             </ul>
 
             <ul class="flex menu menu--secondary">
@@ -32,7 +32,7 @@
                     <MenuButton v-else type="connexion" link="/connexion" />
                 </li>
                 <li>
-                    <MenuButton type="search" link="/search" />
+                    <MenuButton type="contact" link="/contact-us" />
                 </li>
             </ul>
         </nav>
