@@ -5,7 +5,7 @@
 
         <nav class="flex">
             <router-link to="/" class="branding" >
-                <img class="logo" src="@/assets/images/logo/digiquest_blue.svg" alt="Logo DigiQuest">
+                <img class="logo" src="@/assets/logo/digiquest_blue.svg" alt="Logo DigiQuest">
             </router-link>
 
             <ul class="flex menu menu--primary">
@@ -43,7 +43,7 @@
                     ">
         <nav class="flex">
             <div class="branding">
-                <img class="logo" src="@/assets/images/logo/digiquest_blue.svg" alt="Logo DigiQuest">
+                <img class="logo" src="@/assets/logo/digiquest_blue.svg" alt="Logo DigiQuest">
             </div>
 
             <div class="burger">
@@ -114,7 +114,7 @@ header {
         width: 100%;
         height: 100%;
         max-height: 100px;
-        object-fit: cover;
+        object-fit: contain;
     }
 }
 </style>

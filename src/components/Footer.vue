@@ -3,7 +3,11 @@
                     xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300
                 ">
         <div class="branding">
-            <img class="logo" src="/" alt="Logo DigiQuest">
+            <img 
+                class="logo"
+                src="@/assets/logo/digiquest_white.png"
+                alt="Logo de la plateforme"
+            />
         </div>
 
         <div class="most-viewed">
@@ -151,7 +155,7 @@ footer {
         .logo {
             width: 300px;
             height: 150px;
-            background-color: #b4b4b4;
+            object-fit: contain;
         }
     }
 

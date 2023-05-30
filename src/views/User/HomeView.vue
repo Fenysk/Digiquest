@@ -11,7 +11,7 @@
                 <h2>Qui sommes-nous ?</h2>
                 <p v-html="about_text"></p>
             </div>
-            <img src="../../assets/images/photos/christina-wocintechchat-com-LQ1t-8Ms5PY-unsplash.jpg" alt="" />
+            <img src="../../assets/photos/christina-wocintechchat-com-LQ1t-8Ms5PY-unsplash.jpg" alt="" />
         </section>
 
         <section class="facts">
@@ -106,7 +106,7 @@ export default {
 
     min-height: 60vh;
 
-    background-image: url("@/assets/images/photos/markus-spiske-97Rpu-UmCaY-unsplash.jpg");
+    background-image: url("@/assets/photos/markus-spiske-97Rpu-UmCaY-unsplash.jpg");
     background-size: cover;
     background-position: center;
 
