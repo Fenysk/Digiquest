@@ -52,7 +52,7 @@
 <script>
 import { getArticles } from "@/api/Article/getArticles";
 
-import Quizz from "@/assets/quizz/Quizz.vue";
+import Quizz from "@/components/Quizz.vue";
 import Button from "@/components/elements/Button.vue";
 import data from "@/assets/data.json";
 
