@@ -1,5 +1,5 @@
 <template>
-    <footer v-if="screen === 'desktop'" class="
+    <footer class="
                     xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300
                 ">
         <div class="branding">
@@ -41,8 +41,6 @@ export default {
 
     data() {
         return {
-            screen: "desktop",
-
             //fake data
             mostViewed: [
                 {
@@ -120,18 +118,7 @@ export default {
                 },
             ]
         }
-    },
-
-    methods: {
-        handleResize() {
-            this.screen = window.innerWidth > 768 ? "desktop" : "mobile";
-        }
-    },
-
-    mounted() {
-        window.addEventListener("resize", this.handleResize);
-        this.handleResize();
-    },
+    }
 }
 </script>
 
@@ -165,5 +152,29 @@ footer {
         }
     }
 
+}
+</style>
+
+<style lang="scss">
+.tablet,
+.mobile {
+    footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+
+        .branding {
+            .logo {
+                width: 200px;
+                height: 100px;
+            }
+        }
+
+        .most-viewed, .useful-links {
+            h3 {
+                margin-bottom: 8px;
+            }
+        }
+    }
 }
 </style>
