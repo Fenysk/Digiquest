@@ -47,6 +47,10 @@
                 />
             </div>
         </form>
+        <p>articleId : {{ articleId }}</p>
+        <p>user_comment : {{ user_comment }}</p>
+        <p>comments : {{ comments }}</p>
+        <p>commentsAuthor : {{ commentsAuthor }}</p>
     </div>
 </template>
 
@@ -54,8 +58,10 @@
 import jwtDecode from "jwt-decode";
 
 import Button from "@/components/elements/Button.vue";
+
 import { getComments } from "@/api/Comment/getComments";
 import { postComment } from "@/api/Comment/postComment";
+import { getProfile } from "@/api/User/getProfile";
 
 export default {
     name: "Comments",
@@ -74,6 +80,7 @@ export default {
         return {
             user_comment: "",
             comments: [],
+            commentsAuthor: [],
         };
     },
 
@@ -142,11 +149,24 @@ export default {
                         error
                     );
                 });
+            this.comments.forEach((comment) => {
+                getProfile(comment.accountId)
+                    .then((profile) => {
+                        this.commentsAuthor.push(profile);
+                    })
+                    .catch((error) => {
+                        console.error(
+                            "Erreur lors de la récupération du profil de l'auteur du commentaire:",
+                            error
+                        );
+                    });
+            });
         },
     },
 
-    updated() {
 
+
+    mounted() {
         if (this.user_comment == "") {
             if (localStorage.getItem("currentComments") === null) {
                 localStorage.setItem("currentComments", JSON.stringify([]));

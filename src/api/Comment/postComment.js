@@ -8,7 +8,7 @@ export async function postComment(
     const apiUrl = 'https://digiquest-back.herokuapp.com';
 
     try {
-        const response = await axios.post(`${apiUrl}/user`, {
+        const response = await axios.post(`${apiUrl}/comment`, {
             accountId,
             articleId,
             content,
