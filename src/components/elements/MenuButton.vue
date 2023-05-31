@@ -1,5 +1,5 @@
 <template>
-    <div class="menu-button" @click="goTo(link)">
+    <div class="menu-button" @click="goTo(link)" :class="mode">
         <img
             class="icon"
             :src="require(`@/assets/picto/menu/${icon}.svg`)"
@@ -24,6 +24,7 @@ export default {
     props: {
         type: String,
         link: String,
+        mode: String,
     },
 
     mounted() {
@@ -84,6 +85,23 @@ export default {
     height: 100%;
     padding: 0 16px;
     cursor: pointer;
+
+    &.mobile {
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+
+        .icon {
+            margin-right: 12px;
+            height: 48px;
+            width: 48px;
+        }
+
+        .text {
+            margin: 0;
+            font-size: 32px;
+        }
+    }
 
     & * {
         color: $primary-brown;
