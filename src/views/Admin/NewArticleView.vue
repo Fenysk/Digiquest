@@ -71,6 +71,8 @@ h1 {
 form {
     display: flex;
     flex-direction: column;
+    max-width: 1000px;
+    margin: auto;
 
     label {
         font-weight: bold;
