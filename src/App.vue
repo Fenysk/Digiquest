@@ -1,6 +1,6 @@
 <template>
   <div :class="screenType">
-    <Header :screen=screenType :isConnected="isConnected"></Header>
+    <Header :screen=screenType ></Header>
     <router-view class="mt-16" />
     <Footer></Footer>
   </div>
