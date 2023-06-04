@@ -25,7 +25,7 @@
                 >
                     <div class="comment-header">
                         <span class="comment-author">{{
-                            comment.accountId
+                            this.commentsAuthor.find((profile) => profile.id === comment.accountId)
                         }}</span>
                     </div>
                     <p class="comment-content">{{ comment.content }}</p>
