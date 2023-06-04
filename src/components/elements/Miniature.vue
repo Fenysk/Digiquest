@@ -7,7 +7,7 @@
             <p v-if="type === 'ressources' && article.id === 2">
                 <h3>Chez l'adulte</h3>
                 <ul>
-                    <li><a href="http://localhost:8080/ressources/professionnals/1" rel="noopener noreferrer">Professionnel 1</a></li>
+                    <li><a href="http://localhost:8080/ressources/professionnals/1" rel="noopener noreferrer">András Arató</a></li>
                     <li><a href="http://localhost:8080/ressources/professionnals/2" rel="noopener noreferrer">Professionnel 2</a></li>
                     <li><a href="http://localhost:8080/ressources/professionnals/3" rel="noopener noreferrer">Professionnel 3</a></li>
                     <li><a href="http://localhost:8080/ressources/professionnals/4" rel="noopener noreferrer">Professionnel 4</a></li>

@@ -66,6 +66,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/variables.scss";
+
 img {
     width: 150px;
     aspect-ratio: 1/1;

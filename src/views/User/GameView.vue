@@ -56,10 +56,16 @@
                 </div>
             </div>
 
-            <div v-else>
-                Fin du jeu!
+            <div v-else class="
+            results
+            flex
+            flex-col
+            justify-center
+            align-center
+            ">
+                <h3>RESULTATS ET CALL TO ACTION</h3>
+                <p>answers: {{ answers }}</p>
             </div>
-            answers: {{ answers }}
             <!-- End Main Game -->
         </div>
         <!-- End Game Content -->
@@ -227,6 +233,11 @@ export default {
                         }
                     }
                 }
+            }
+
+            .results {
+                min-height: 300px;
+                width: 100%;
             }
         }
     }

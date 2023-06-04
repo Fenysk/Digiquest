@@ -47,10 +47,6 @@
                 />
             </div>
         </form>
-        <p>articleId : {{ articleId }}</p>
-        <p>user_comment : {{ user_comment }}</p>
-        <p>comments : {{ comments }}</p>
-        <p>commentsAuthor : {{ commentsAuthor }}</p>
     </div>
 </template>
 
@@ -164,6 +160,11 @@ export default {
         },
     },
 
+    updated() {
+        this.$nextTick(function () {
+            this.getComments(this.articleId);
+        });
+    },
 
 
     mounted() {
@@ -213,6 +214,14 @@ export default {
         &:focus {
             outline-color: $primary-blue;
         }
+    }
+
+    .comment {
+        width: 100%;
+        background-color: rgba($primary-white, 0.7);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
     }
 }
 </style>
