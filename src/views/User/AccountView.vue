@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="account-view xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16"
-    >
+    <div class="account-view xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16">
         <h1 class="text-center">Bonjour {{ profile.firstName }} !</h1>
 
         <div class="avatar mt-20">
@@ -11,17 +9,8 @@
                     <p class="text-center mb-4">Choisis ton animal</p>
 
                     <div class="grille">
-                        <a
-                            v-for="animal in animals"
-                            :key="animal"
-                            @click.prevent
-                            href=""
-                            class="animal cursor-pointer"
-                        >
-                            <img
-                                :src="require(`@/assets/picto/animals/${animal}.svg`)"
-                                :alt="animal"
-                            />
+                        <a v-for="animal in animals" :key="animal" @click.prevent href="" class="animal cursor-pointer">
+                            <img :src="require(`@/assets/picto/animals/${animal}.svg`)" :alt="animal" />
                         </a>
                     </div>
                 </div>
@@ -29,12 +18,10 @@
                     <p class="text-center mb-4">Choisis ta couleur</p>
 
                     <div class="grille">
-                        <article
-                            v-for="color in colors"
-                            :key="color"
-                            class="color"
-                        >
-                            <p>{{ color }}</p>
+                        <article v-for="color in colors" :key="color"
+                            class="color rounded-full cursor-pointer p-1 border-2 border-black">
+                            <div :class="color" class="h-12 w-12 rounded-full">
+                            </div>
                         </article>
                     </div>
                 </div>
@@ -46,43 +33,26 @@
             <h2 class="text-center">Informations personnelles</h2>
 
             <div class="inputs flex flex-col justify-center">
-                <input
-                    type="text"
-                    placeholder="Prénom"
-                    class="mt-4"
-                    v-model="profile.firstName"
-                />
-                <input
-                    type="text"
-                    placeholder="Nom"
-                    class="mt-4"
-                    v-model="profile.lastName"
-                />
-                <input
-                    type="email"
-                    placeholder="Email"
-                    class="mt-4"
-                    v-model="profile.email"
-                />
+                <input type="text" placeholder="Prénom" class="mt-4" v-model="profile.firstName" />
+                <input type="text" placeholder="Nom" class="mt-4" v-model="profile.lastName" />
+                <input type="birthday" placeholder="Date de naissance" class="mt-4" v-model="birthDateToDisplay" />
             </div>
 
             <div class="flex justify-center mt-4">
-                <Button :text="'Mettre à jour'" class="cursor-pointer" />
+                <Button :text="'Mettre à jour'" class="cursor-pointer" @click="updateProfile" />
             </div>
         </div>
 
-        <Button
-            secondary
-            :text="'Se déconnecter'"
-            class="cursor-pointer"
-            @click="logout"
-        />
+        <Button secondary :text="'Se déconnecter'" class="cursor-pointer" @click="logout" />
+        <Button :text="'Supprimer mon compte'" class="cursor-pointer" @click="deleteAccount" />
     </div>
 </template>
 
 <script>
 
 import { getProfile } from "@/api/User/getProfile";
+import { patchProfile } from "@/api/User/patchProfile";
+import { deleteProfile } from "@/api/User/deleteProfile";
 import jwtDecode from "jwt-decode";
 
 import Button from "@/components/elements/Button.vue";
@@ -95,7 +65,7 @@ export default {
     data() {
         return {
             profile: {},
-            dateDeNaissance: "",
+            birthDateToDisplay: "",
 
             animals: [
                 "hedgehog",
@@ -117,22 +87,22 @@ export default {
             ],
 
             colors: [
-                "Rouge",
-                "Orange",
-                "Jaune",
-                "Vert clair",
-                "Vert foncé",
-                "Bleu clair",
-                "Bleu foncé",
-                "Violet",
-                "Rose clair",
-                "Rose foncé",
-                "Marron clair",
-                "Marron foncé",
-                "Gris clair",
-                "Gris foncé",
-                "Noir",
-                "Blanc",
+                "red",
+                "orange",
+                "yellow",
+                "green",
+                "blue",
+                "purple",
+                "pink",
+                "brown",
+                "black",
+                "white",
+                "grey",
+                "beige",
+                "turquoise",
+                "gold",
+                "silver",
+                "bronze",
             ],
         };
     },
@@ -146,6 +116,53 @@ export default {
                 window.location.reload();
             });
         },
+
+        updateProfile() {
+            const date = new Date(this.birthDateToDisplay);
+
+            if (isNaN(date.getTime())) {
+                console.error('Invalid date format');
+                return;
+            }
+
+            const isoDate = date.toISOString();
+            console.log(isoDate);
+
+            this.profile.birthDate = isoDate;
+
+            patchProfile(this.profile)
+                .then(() => {
+                    location.reload();
+                })
+                .catch((error) => {
+                    console.error('Erreur lors de la mise à jour du profil:', error);
+                });
+        },
+
+        deleteAccount() {
+            deleteProfile(this.profile.id)
+                .then(() => {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("profileId");
+                    this.$router.push("/");
+                    this.$nextTick(() => {
+                        window.location.reload();
+                    });
+                })
+                .catch((error) => {
+                    console.error('Erreur lors de la suppression du profil:', error);
+                });
+        }
+
+    },
+
+    watch: {
+        birthDateToDisplay() {
+            // ISO to FR with good practice
+            const date = new Date(this.birthDateToDisplay);
+            const options = { year: "numeric", month: "long", day: "numeric" };
+            this.birthDateToDisplay = date.toLocaleDateString("fr-FR", options);
+        },
     },
 
     mounted() {
@@ -158,6 +175,7 @@ export default {
             getProfile(profileId)
                 .then((profile) => {
                     this.profile = profile;
+                    this.birthDateToDisplay = profile.birthDate;
                 })
                 .catch((error) => {
                     console.error(
@@ -195,5 +213,74 @@ input {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
     gap: 1rem;
+}
+
+.colors {
+    .grille {
+        .red {
+            background-color: #bf1212;
+        }
+
+        .orange {
+            background-color: #ff7f00;
+        }
+
+        .yellow {
+            background-color: rgb(255, 242, 0);
+        }
+
+        .green {
+            background-color: #13d413;
+        }
+
+        .blue {
+            background-color: #1111d8;
+        }
+
+        .purple {
+            background-color: #a832a8;
+        }
+
+        .pink {
+            background-color: #ff00ff;
+        }
+
+        .brown {
+            background-color: #a83232;
+        }
+
+        .black {
+            background-color: #000000;
+        }
+
+        .white {
+            background-color: #ffffff;
+        }
+
+        .grey {
+            background-color: #808080;
+        }
+
+        .beige {
+            background-color: #f5f5dc;
+        }
+
+        .turquoise {
+            background-color: #40e0d0;
+        }
+
+        .gold {
+            background-color: #ffd700;
+        }
+
+        .silver {
+            background-color: #c0c0c0;
+        }
+
+        .bronze {
+            background-color: #cd7f32;
+        }
+
+    }
 }
 </style>
