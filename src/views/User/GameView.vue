@@ -1,52 +1,61 @@
 <template>
-    <div id="test" class="xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-64">
+    <div id="game" class="xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300">
 
         <!-- Game Content -->
-        <div>
-            <!-- Progress Bar -->
-            <div>
-                ProgressBar: {{ progress.toFixed(0) }} %
-                <div style="display: flex; flex-direction: row; width: 600px;">
+        <div class="content">
 
-                    <!-- Repeted section + star -->
-                    <div v-for="item, index of [0, 1, 2, 3]" :key="index"
-                        style="display: flex;width: 150px; justify-content: space-around;align-items: center;">
-                        <div
-                            style="display: inline-block;height: 10px; width:130px; background-color: white;border:black 1px solid;">
+            <div class="menu flex justify-between">
+                <Button :text="'Faire une pause'" :href="''" class="cursor-pointer" @click.prevent />
+                <!-- Progress Bar -->
+                <div class="progress_bar mt-4">
+                    <div class="flex flex-row" style="width: 600px;">
 
-                            <!-- Progress Section -->
-                            <div style="height: 100%; background-color: yellow; transition: width 0.3s;"
-                                :style="{ width: sectionsProgress[index].toFixed(0) + '%', 'transition-delay': (progress >= (index + 1) * 25) ? '0' : '0.4s' }">
+                        <!-- Repeted section + star -->
+                        <div v-for="item, index of [0, 1, 2, 3]" :key="index" class="flex justify-around items-center"
+                            style="width: 150px;">
+                            <div style="height: 10px; width:130px;"
+                                class="bar inline-block bg-white border-black border-2 rounded-full">
+                                <!-- Progress Section -->
+                                <div style="height: 100%; background-color: yellow; transition: width 0.3s;"
+                                    :style="{ width: sectionsProgress[index].toFixed(0) + '%', 'transition-delay': (progress >= (index + 1) * 25) ? '0' : '0.4s' }">
+                                </div>
+
+
                             </div>
-
-
+                            <img src="@/assets/game/star_full.png" alt="star" class="mx-2 h-10 w-10 contain"
+                                v-if="starColors[index] == 'star_full'">
+                            <img src="@/assets/game/star.png" alt="star" class="mx-2 h-10 w-10 contain" v-else>
                         </div>
-                        <!-- Progress Star -->
-                        <div style="height: 24px; width: 24px; border:1px solid black; border-radius: 50%; transition: background-color s 0.4s;"
-                            :style="{ backgroundColor: starColors[index] }"></div>
+
+
                     </div>
-
-
                 </div>
+                <!-- End Progress Bar -->
             </div>
-            <!-- End Progress Bar -->
+
+
 
             <!-- Main Game -->
-            <div v-if="!!scenario && currentStep < scenario.length">
-                <div>Oiseau.png</div>
-                <!-- Question -->
-                <div>
-                    {{ scenario[currentStep].question }}
-                </div>
+            <div v-if="!!scenario && currentStep < scenario.length" class="mt-6 game">
 
-                <!-- Answers -->
-                <div>
-                    <div v-for="item, index of scenario[currentStep].answers" :key="index">
-                        <button type="button" @click="answerClicked(index)"> {{ scenario[currentStep].answers[index] }}
-                        </button> <br>
+                <Colibri class="animal" />
+
+                <div class="content">
+                    <!-- Question -->
+                    <div class="questions">
+                        {{ scenario[currentStep].question }}
+                    </div>
+
+                    <!-- Answers -->
+                    <div class="mt-10 answers">
+                        <div v-for="item, index of scenario[currentStep].answers" :key="index">
+                            <button type="button" @click="answerClicked(index)"> {{ scenario[currentStep].answers[index] }}
+                            </button> <br>
+                        </div>
                     </div>
                 </div>
             </div>
+
             <div v-else>
                 Fin du jeu!
             </div>
@@ -59,8 +68,17 @@
 </template>
 
 <script>
+import Colibri from '@/components/elements/Colibri.vue'
+import Button from '@/components/elements/Button.vue'
+
 export default {
     name: "GameView",
+
+    components: {
+        Colibri,
+        Button
+    },
+
     async mounted() {
         // TODO check with server if user is register
 
@@ -72,24 +90,29 @@ export default {
             currentStep: 0,
             scenario: [
                 {
-                    question: "question # 1",
-                    answers: ["Answers 1-1", "Answers 1-2", "Answers 1-3", "Answers 1-4"]
+                    // Question 1 d'un diagnostic de TDAH
+                    question: "Zut, j'ai encore oublié de sortir les poubelles !",
+                    answers: ["Je ne me souviens jamais de ce que je dois faire.", "Il m'arrive d'oublier de faire les choses.", "Je oublie souvent des tâches.", "J'oublie tout le temps les choses."]
                 },
                 {
-                    question: "question # 2",
-                    answers: ["Answers 2-1", "Answers 2-2", "Answers 3-3", "Answers 4-4"]
+                    // Question 3 d'un diagnostic de TDAH
+                    question: "Pfff, c'est long de finir ce puzzle, je préfère faire autre chose.",
+                    answers: ["Il est difficile pour moi de me concentrer longtemps sur une tâche.", "Parfois, je perds mon attention pendant une tâche.", "Souvent, je suis distrait pendant une tâche.", "Je ne peux jamais rester concentré pendant une tâche."]
                 },
                 {
-                    question: "question # 3",
-                    answers: ["Answers 3-1", "Answers 3-2", "Answers 3-3", "Answers 3-4"]
+                    // Question 4 d'un diagnostic de TDAH
+                    question: "Qu'est-ce que tu disais maman ? J'étais en train de penser à mon prochain match de football.",
+                    answers: ["Je n'écoute jamais quand on me parle.", "Parfois, je ne prête pas attention quand on me parle.", "Souvent, je semble ne pas écouter quand on me parle.", "Je ne prête jamais attention quand on me parle."]
                 },
                 {
-                    question: "question # 4",
-                    answers: ["Answers 4-1", "Answers 4-2", "Answers 4-3", "Answers 4-4"]
+                    // Question 6 d'un diagnostic de TDAH
+                    question: "J'ai un devoir de maths, un dessin à faire et un livre à lire. Je ne sais pas par où commencer.",
+                    answers: ["Je n'arrive jamais à organiser mes tâches.", "Parfois, je ne sais pas comment organiser mes activités.", "Souvent, j'ai du mal à organiser mes tâches.", "Je suis toujours désorganisé."]
                 },
                 {
-                    question: "question # 5",
-                    answers: ["Answers 5-1", "Answers 5-2", "Answers 5-3", "Answers 5-4"]
+                    // Question 8 d'un diagnostic de TDAH
+                    question: "Où ai-je mis mon stylo ? Je suis sûr de l'avoir mis dans mon sac à dos.",
+                    answers: ["Je ne peux jamais retrouver mes affaires.", "Parfois, je perds les objets dont j'ai besoin.", "Souvent, je ne sais pas où sont les objets dont j'ai besoin.", "Je perds toujours mes affaires."]
                 },
             ],
             answers: []
@@ -116,7 +139,7 @@ export default {
         starColors() {
             let stars = [];
             for (let i = 0; i < 4; i++) {
-                const status = (this.progress >= (i + 1) * 25) ? 'rgba(255, 255, 0, 1.0)' : 'rgba(255, 255, 0, 0.2)'
+                const status = (this.progress >= (i + 1) * 25) ? 'star_full' : 'star'
                 stars.push(status)
             }
             return stars;
@@ -139,4 +162,73 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/scss/variables.scss";
+
+#game {
+    border: 10px solid $primary-blue;
+    height: calc(100vh - $header-height);
+
+    .colibri {
+        transform: scale(0.5);
+    }
+
+    .progress_bar {
+        .bar {
+            border-color: $primary-blue;
+            border-width: 3px;
+        }
+    }
+
+    .content {
+        .menu {
+            margin-top: 5vh;
+        }
+
+        .game {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 5%;
+
+            position: relative;
+
+            .animal {
+                aspect-ratio: 1;
+            }
+
+            .content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                min-width: 50% !important;
+
+
+                .questions {
+                    font-size: 32px;
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: 700;
+                    color: $secondary-brown;
+                    margin-bottom: 8vh;
+                }
+
+                .answers {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    gap: 50px;
+                    font-size: 18px;
+                    font-family: 'Roboto', sans-serif;
+                    color: $primary-brown;
+
+                    div {
+                        &:hover {
+                            transform: scale(1.1);
+                            transition: transform 0.3s;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 </style>
