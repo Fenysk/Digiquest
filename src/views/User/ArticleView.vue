@@ -14,11 +14,15 @@
             <Button :text="'Retour à la liste des articles'" :href="'/blog'" />
             <Button :text="'Aller en haut de la page'" :href="'#article'" secondary />
         </div>
+
+        {{ comments }}
     </div>
 </template>
 
 <script>
 import { getArticle } from "../../api/Article/getArticle";
+import { getArticleComments } from "../../api/Article/getArticleComments";
+
 
 import Breadcrumb from "../../components/elements/Breadcrumb.vue";
 import Button from "../../components/elements/Button.vue";
@@ -30,10 +34,11 @@ export default {
     data() {
         return {
             article: {},
+            comments: [],
         }
     },
 
-    mounted() {
+    async mounted() {
         const articleId = this.$route.params.id;
         getArticle(articleId)
             .then((article) => {
@@ -42,6 +47,15 @@ export default {
             .catch((error) => {
                 console.error('Erreur lors de la récupération des articles:', error);
             });
+        
+        try {
+          const comments = await getArticleComments(articleId);
+          this.comments = comments;
+        } catch (error) {
+          console.error('Erreur lors de la récupération des commentaires:', error);
+        }
+
+
     }
 }
 </script>
