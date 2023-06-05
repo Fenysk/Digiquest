@@ -174,9 +174,9 @@ export default {
 
 #game {
     border: 10px solid $primary-blue;
-    /*
+
     height: calc(100vh - $header-height);
-    */
+
 
     .colibri {
         transform: scale(0.5);
