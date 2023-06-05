@@ -70,9 +70,10 @@ export default {
       this.articlesCount = data.length;
       console.log(this.articles);
     }
+
   },
 
-  mounted() {
+  async mounted() {
     // getArticles()
     //   .then((articles) => {
     //     this.articles = articles.reverse().slice(this.currentPage * this.articlesPerPages - this.articlesPerPages, this.currentPage * this.articlesPerPages);
@@ -81,7 +82,7 @@ export default {
     //   .catch((error) => {
     //     console.error('Erreur lors de la récupération des articles:', error);
     //   });
-    this.getArticles()
+    this.getArticles();
   },
 }
 </script>
