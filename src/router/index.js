@@ -9,6 +9,8 @@ import AccountView from "@/views/User/AccountView.vue";
 import ContactView from "@/views/User/ContactView.vue";
 import RessourcesView from "@/views/User/RessourcesView.vue";
 import TestView from "@/views/User/TestView.vue";
+import GameView from "@/views/User/GameView.vue";
+
 import ProfessionnalView from "@/views/User/ProfessionnalView.vue";
 
 const routes = [
@@ -28,8 +30,8 @@ const routes = [
 
   {
     path: "/test",
-    name: "TestView",
-    component: TestView,
+    name: "GameView",
+    component: GameView,
   },
 
   {
