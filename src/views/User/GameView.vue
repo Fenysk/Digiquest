@@ -65,6 +65,10 @@
             ">
                 <h3>RESULTATS ET CALL TO ACTION</h3>
                 <p>answers: {{ answers }}</p>
+
+                <div>
+                    <Button :text="'Télécharger mes résultats'" :href="''" secondary class="cursor-pointer download" @click.prevent />
+                </div>
             </div>
             <!-- End Main Game -->
         </div>
