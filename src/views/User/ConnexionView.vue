@@ -19,6 +19,7 @@
             <input v-if="isSignUp" type="date" id="birthDate" placeholder="Date de naissance" v-model="user.birthDate" required />
 
 
+
             <div class="flex justify-center mt-4">
                 <Button class="cursor-pointer"
                     :text="isSignUp ? 'S\'inscrire' : 'Se connecter'"
@@ -32,6 +33,12 @@
             </div>
 
         </form>
+        
+        <ul v-if="isSignUp">
+          <li>Nous stockons vos informations personnelles (nom, prénom, email, date de naissance, résultat de tests) afin de vous identifier sur le site.</li>
+          <li>Nous ne les divulguerons jamais à qui que ce soit sans votre accord.</li>
+          <li>Elles seront automatiquement effacées lors de votre désinscription.</li>
+        </ul>
     </div>    
 </template>
 
