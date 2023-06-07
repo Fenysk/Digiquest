@@ -68,6 +68,7 @@
             ">
                 <h3>Resultat:</h3>
                 <p>{{ result }}</p>
+                <p>{{ comment }}</p>
             </div>
             <!-- End Main Game -->
         </div>
@@ -80,6 +81,8 @@
 //import Colibri from '@/components/elements/Colibri.vue'
 import Button from '@/components/elements/Button.vue'
 import { postTestResult } from "@/api/TestResult/postTestResult";
+import { getAccountPendingTests } from "@/api/PendingTest/getAccountPendingTests";
+import { deletePendingTest } from "@/api/PendingTest/deletePendingTest";
 import jwtDecode from "jwt-decode";
 
 
@@ -95,10 +98,21 @@ export default {
         // TODO check with server if user is register
 
         // TODO check if user already has pendingtest
-        // if yes -> set answers and curretn step
+        // if yes -> set pendingTestId, answers and current step
+        const token = localStorage.getItem('token');
+        const userId = jwtDecode(token).userId;
+        const tests = await getAccountPendingTests(userId);
+        if (!!tests && tests.length > 0) {
+          // get [0] for now
+          this.pendingTestId = tests[0].id;
+          this.answers = JSON.parse(tests[0].data);
+          this.currentStep = this.answers.length;
+        }
+        
     },
     data() {
         return {
+            pendingTestId: null,
             currentStep: 0,
             scenario: [
                 {
@@ -129,6 +143,7 @@ export default {
             ],
             answers: [],
             result: null,
+            comment: "",
         }
     },
     computed: {
@@ -178,15 +193,22 @@ export default {
             data: JSON.stringify(this.answers)
           }
           const response = await postTestResult(payload);
-          console.log(response.data)
+
+          // delete pending test that was loaded, if exists
+          if (!!this.pendingTestId){
+            const delteResult = await deletePendingTest(this.pendingTestId);
+          }
+
           const total = this.answers.reduce((stack, current) => {
             // add to total value in scores at index = answer
             return stack + [0,1,3,5][current];
           }, 0);
+          const score = total / (this.scenario.length * 5) * 100
+          this.result = `Tu as un score de ${score.toFixed(0)} /100`
           if (total > this.scenario.length * 2){
-            this.result = "High score";
+            this.comment += "Ca peut être le signe d'un TDA-H; tu devrais peut-être voir un spécialiste.";
           } else {
-            this.result = "Low score";
+            this.comment += "Tu ne sembles pas avoir de TDA-H. Mais nous somme pas des spécialistes! Si tu as toujours un doute, n'hésite pas à en voir un!";
           }
         }
     }
