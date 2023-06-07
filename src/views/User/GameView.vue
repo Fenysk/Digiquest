@@ -52,7 +52,7 @@
                     <!-- Answers -->
                     <div class="mt-10 answers">
                         <div v-for="item, index of scenario[currentStep].answers" :key="index">
-                            <button type="button" @click="answerClicked(index)"> {{ scenario[currentStep].answers[index] }}
+                            <button type="button" @click="answerClicked(index)"> {{ item }}
                             </button> <br>
                         </div>
                     </div>
@@ -66,8 +66,8 @@
             justify-center
             align-center
             ">
-                <h3>RESULTATS ET CALL TO ACTION</h3>
-                <p>answers: {{ answers }}</p>
+                <h3>Resultat:</h3>
+                <p>{{ result }}</p>
             </div>
             <!-- End Main Game -->
         </div>
@@ -79,6 +79,9 @@
 <script>
 //import Colibri from '@/components/elements/Colibri.vue'
 import Button from '@/components/elements/Button.vue'
+import { postTestResult } from "@/api/TestResult/postTestResult";
+import jwtDecode from "jwt-decode";
+
 
 export default {
     name: "GameView",
@@ -124,7 +127,8 @@ export default {
                     answers: ["Je ne peux jamais retrouver mes affaires.", "Parfois, je perds les objets dont j'ai besoin.", "Souvent, je ne sais pas où sont les objets dont j'ai besoin.", "Je perds toujours mes affaires."]
                 },
             ],
-            answers: []
+            answers: [],
+            result: null,
         }
     },
     computed: {
@@ -163,8 +167,28 @@ export default {
             // handle end of game
             if (this.currentStep === this.scenario.length) {
                 this.finishedGame = true;
+                this.endGame();
             }
         },
+        async endGame() {
+          const token = localStorage.getItem('token');
+          const userId = jwtDecode(token).userId;
+          const payload = {
+            accountId: userId,
+            data: JSON.stringify(this.answers)
+          }
+          const response = await postTestResult(payload);
+          console.log(response.data)
+          const total = this.answers.reduce((stack, current) => {
+            // add to total value in scores at index = answer
+            return stack + [0,1,3,5][current];
+          }, 0);
+          if (total > this.scenario.length * 2){
+            this.result = "High score";
+          } else {
+            this.result = "Low score";
+          }
+        }
     }
 }
 </script>
