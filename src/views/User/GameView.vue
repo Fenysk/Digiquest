@@ -5,7 +5,7 @@
         <div class="content">
 
             <div class="menu flex justify-between">
-                <Button :text="'Faire une pause'" :href="''" class="cursor-pointer" @click.prevent />
+                <Button :text="'Faire une pause'" :href="''" class="cursor-pointer" @click.prevent="interrupt()" />
                 <!-- Progress Bar -->
                 <div class="progress_bar mt-4">
                     <div class="flex flex-row" style="width: 600px;">
@@ -82,6 +82,8 @@
 import Button from '@/components/elements/Button.vue'
 import { postTestResult } from "@/api/TestResult/postTestResult";
 import { getAccountPendingTests } from "@/api/PendingTest/getAccountPendingTests";
+import { postPendingTest } from "@/api/PendingTest/postPendingTest";
+import { patchPendingTest } from "@/api/PendingTest/patchPendingTest";
 import { deletePendingTest } from "@/api/PendingTest/deletePendingTest";
 import jwtDecode from "jwt-decode";
 
@@ -184,6 +186,21 @@ export default {
                 this.finishedGame = true;
                 this.endGame();
             }
+        },
+        async interrupt(){
+          const token = localStorage.getItem('token');
+          const userId = jwtDecode(token).userId;
+          const payload = {
+            accountId: userId,
+            data: JSON.stringify(this.answers)
+          }          
+          if (!!this.pendingTestId){
+            await patchPendingTest(this.pendingTestId, payload);
+          } else {
+            await postPendingTest(payload);
+          }
+          this.$router.push('/');
+
         },
         async endGame() {
           const token = localStorage.getItem('token');
