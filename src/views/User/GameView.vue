@@ -41,7 +41,7 @@
                 <Colibri class="animal" />
                 -->
                 
-                <img src="../../assets/game/colibri_01.gif" />
+                <img src="../../assets/game/colibri_small.gif" />
 
                 <div class="content">
                     <!-- Question -->
@@ -69,6 +69,9 @@
                 <h3>Resultat:</h3>
                 <p>{{ result }}</p>
                 <p>{{ comment }}</p>
+                <Button :text="'Retour à l\'accueil'" :href="'/'" class="cursor-pointer"  />
+                <Button :text="'Annuaire des professionnels'" :href="'/ressources/'" class="cursor-pointer" />
+
             </div>
             <!-- End Main Game -->
         </div>
@@ -119,28 +122,38 @@ export default {
             scenario: [
                 {
                     // Question 1 d'un diagnostic de TDAH
+                    question: "Au cinéma, il y a la queue pour le film que je veux voir. Par contre, il n'y a personne pour voir un film qui m'interesse moins.",
+                    answers: ["J'arrive a rester patient", "Je perd parfois patience", "J'ai souvent du mal à patienter", "Soit on voit l'autre film tout desuite, soit on s'en va, mais je n'attends pas!"]
+                },
+                {
+                    // Question 1 d'un diagnostic de TDAH
                     question: "Zut, j'ai encore oublié de sortir les poubelles !",
-                    answers: ["Je ne me souviens jamais de ce que je dois faire.", "Il m'arrive d'oublier de faire les choses.", "Je oublie souvent des tâches.", "J'oublie tout le temps les choses."]
+                    answers: ["Je me souviens toujours de ce que je dois faire.", "Il m'arrive d'oublier de faire les choses.", "J'oublie souvent des tâches.", "J'oublie tout le temps les choses."]
                 },
                 {
                     // Question 3 d'un diagnostic de TDAH
                     question: "Pfff, c'est long de finir ce puzzle, je préfère faire autre chose.",
-                    answers: ["Il est difficile pour moi de me concentrer longtemps sur une tâche.", "Parfois, je perds mon attention pendant une tâche.", "Souvent, je suis distrait pendant une tâche.", "Je ne peux jamais rester concentré pendant une tâche."]
+                    answers: ["J'arrive à rester concentré.", "Parfois, je perds mon attention pendant une tâche.", "Souvent, je suis distrait pendant une tâche.", "Je ne peux jamais rester concentré pendant une tâche."]
                 },
                 {
                     // Question 4 d'un diagnostic de TDAH
-                    question: "Qu'est-ce que tu disais maman ? J'étais en train de penser à mon prochain match de football.",
-                    answers: ["Je n'écoute jamais quand on me parle.", "Parfois, je ne prête pas attention quand on me parle.", "Souvent, je semble ne pas écouter quand on me parle.", "Je ne prête jamais attention quand on me parle."]
+                    question: "Qu'est-ce que tu disais maman ? J'étais en train de penser à mon prochain match de foot.",
+                    answers: ["J'écoute toujours quand on me parle.", "Parfois, je ne prête pas attention quand on me parle.", "Souvent, je semble ne pas écouter quand on me parle.", "Je ne prête jamais attention quand on me parle."]
                 },
                 {
                     // Question 6 d'un diagnostic de TDAH
                     question: "J'ai un devoir de maths, un dessin à faire et un livre à lire. Je ne sais pas par où commencer.",
-                    answers: ["Je n'arrive jamais à organiser mes tâches.", "Parfois, je ne sais pas comment organiser mes activités.", "Souvent, j'ai du mal à organiser mes tâches.", "Je suis toujours désorganisé."]
+                    answers: ["J'arrive à rester organisé.", "Parfois, je ne sais pas comment organiser mes activités.", "Souvent, j'ai du mal à organiser mes tâches.", "Je suis toujours désorganisé."]
                 },
                 {
                     // Question 8 d'un diagnostic de TDAH
                     question: "Où ai-je mis mon stylo ? Je suis sûr de l'avoir mis dans mon sac à dos.",
-                    answers: ["Je ne peux jamais retrouver mes affaires.", "Parfois, je perds les objets dont j'ai besoin.", "Souvent, je ne sais pas où sont les objets dont j'ai besoin.", "Je perds toujours mes affaires."]
+                    answers: ["Je ne pas souvent mes affaires.", "Parfois, je perds les objets dont j'ai besoin.", "Souvent, je ne sais pas où sont les objets dont j'ai besoin.", "Je perds toujours mes affaires."]
+                },
+                {
+                    // Question 9 d'un diagnostic de TDAH
+                    question: "Quand je suis assis en classe...",
+                    answers: ["Je peux rester immobile pendant longtemps.", "Parfois, je bouge les mains ou les jambes sans y penser", "Je bouge souvent, je bat des jambes ou des bras.", "Je ne peux pas rester en place, je me tortille sur ma chaise, je me lève parfois."]
                 },
             ],
             answers: [],
