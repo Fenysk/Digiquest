@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/User/HomeView.vue";
 import ErrorView from "@/views/ErrorView.vue";
+import ConfidentialityView from "@/views/ConfidentialityView.vue";
 import BlogView from "@/views/User/BlogView.vue";
 import ArticleView from "@/views/User/ArticleView.vue";
 import NewArticleView from "@/views/Admin/NewArticleView.vue";
@@ -160,6 +161,24 @@ const routes = [
         {
           text: "Contact",
           link: "/contact-us",
+        },
+      ],
+    },
+  },
+
+  {
+    path: "/confidentiality",
+    name: "COnfidentialityView",
+    component: ConfidentialityView,
+    meta: {
+      breadcrumb: [
+        {
+          text: "Accueil",
+          link: "/",
+        },
+        {
+          text: "Politique de confidentialité",
+          link: "/confidentiality",
         },
       ],
     },
