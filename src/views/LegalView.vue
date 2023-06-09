@@ -91,7 +91,7 @@ import Button from "../components/elements/Button.vue";
 
 export default {
     components: { Button },
-    name: "ConfidentialityView",
+    name: "LegalView",
 }
 </script>
 
