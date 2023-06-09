@@ -61,6 +61,11 @@ export default {
                     children: [],
                 },
                 {
+                    name: "SitemapView",
+                    link: "/legal",
+                    children: [],
+                },
+                {
                     name: "SiteMapView",
                     link: "/plan-du-site",
                     children: [],
