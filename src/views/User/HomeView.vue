@@ -11,7 +11,7 @@
                 <h2>Qui sommes-nous ?</h2>
                 <p v-html="about_text"></p>
             </div>
-            <img src="../../assets/photos/christina-wocintechchat-com-LQ1t-8Ms5PY-unsplash.jpg" alt="" />
+            <img src="@/assets/photos/christina-wocintechchat-com-LQ1t-8Ms5PY-unsplash.jpg" alt="" />
         </section>
 
         <section class="facts">

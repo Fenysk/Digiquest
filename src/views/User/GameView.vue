@@ -52,7 +52,7 @@
                     <!-- Answers -->
                     <div class="mt-10 answers">
                         <div v-for="item, index of scenario[currentStep].answers" :key="index">
-                            <button type="button" @click="answerClicked(index)"> {{ item }}
+                            <button class="answer" type="button" @click="answerClicked(index)"> {{ item }}
                             </button> <br>
                         </div>
                     </div>
@@ -249,7 +249,8 @@ export default {
 @import "@/assets/scss/variables.scss";
 
 #game {
-    border: 10px solid $primary-blue;
+    border: 14px solid $primary-blue;
+    border-width: 22px 14px 14px 14px;
 
     height: calc(100vh - $header-height);
 
@@ -302,15 +303,22 @@ export default {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     grid-template-rows: 1fr 1fr;
+                    justify-content: center;
+                    align-items: center;
                     gap: 50px;
                     font-size: 18px;
                     font-family: 'Roboto', sans-serif;
                     color: $primary-brown;
 
                     div {
+                        width: fit-content;
+                        vertical-align: middle;
+                        padding: 12px 24px;
+                        border-radius: 100px;
+                        transition: all 0.3s;
                         &:hover {
+                            background-color: $secondary-blue;
                             transform: scale(1.1);
-                            transition: transform 0.3s;
                         }
                     }
                 }
