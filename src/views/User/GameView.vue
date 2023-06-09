@@ -73,6 +73,7 @@
                 <Button :text="'Annuaire des professionnels'" :href="'/ressources/'" class="cursor-pointer" />
 
             </div>
+
             <!-- End Main Game -->
         </div>
         <!-- End Game Content -->
