@@ -16,6 +16,7 @@
             <li>Evitez le spam</li>
         </ol>
 
+
         <div class="container">
             <ul class="comments">
                 <li
@@ -24,9 +25,7 @@
                     :key="comment.id"
                 >
                     <div class="comment-header">
-                        <span class="comment-author">{{
-                            this.commentsAuthor.find((profile) => profile.id === comment.accountId)
-                        }}</span>
+                        <b><span class="comment-author">{{ comment.account.username }}</span></b>
                     </div>
                     <p class="comment-content">{{ comment.content }}</p>
                 </li>
@@ -76,7 +75,6 @@ export default {
         return {
             user_comment: "",
             comments: [],
-            commentsAuthor: [],
         };
     },
 
@@ -145,18 +143,6 @@ export default {
                         error
                     );
                 });
-            this.comments.forEach((comment) => {
-                getProfile(comment.accountId)
-                    .then((profile) => {
-                        this.commentsAuthor.push(profile);
-                    })
-                    .catch((error) => {
-                        console.error(
-                            "Erreur lors de la récupération du profil de l'auteur du commentaire:",
-                            error
-                        );
-                    });
-            });
         },
     },
 
