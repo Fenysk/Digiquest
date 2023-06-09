@@ -31,7 +31,6 @@
                     secondary
                 />
             </div>
-
         </form>
         
         <ul v-if="isSignUp">
@@ -44,6 +43,8 @@
 
 <script>
 import axios from "axios";
+import { postLogin } from "@/api/Auth/postLogin.js";
+import { postUser } from "@/api/Auth/postUser.js";
 
 import Button from "../../components/elements/Button.vue";
 
@@ -101,11 +102,11 @@ export default {
                     this.token = response.data.token;
                     this.$nextTick(() => {
                         window.location.reload();
-                    })
+                    });
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(error);
-                })
+                });
         },
 
         async signup() {
@@ -132,18 +133,22 @@ export default {
                         window.location.reload();
                     })
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(error);
-                })
+                });
         },
     },
 
     mounted() {
-        if (localStorage.getItem('token')) {
-            this.$router.push('/my-account');
+        try {
+            if (localStorage.getItem("token")) {
+                this.$router.push("/my-account");
+            }
+        } catch (error) {
+            this.$router.push("/connexion");
         }
-    }
-}
+    },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -173,5 +178,4 @@ input {
         opacity: 0.5;
     }
 }
-
 </style>

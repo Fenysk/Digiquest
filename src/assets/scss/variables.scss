@@ -8,8 +8,7 @@
 h1, h2 {
     font-family: 'Indie Flower', cursive;
     font-weight: 400;
-    font-size: 2rem;
-    // font-size: 64px;
+    font-size: 40px;
 
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -19,11 +18,14 @@ h1, h2 {
     white-space: nowrap;
 }
 
+h1 {
+    font-size: 64px;
+}
+
 h3 {
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
-    font-size: 1.2rem;
-    // font-size: 32px;
+    font-size: 32px;
 
     color: $primary-brown;
     white-space: nowrap;
@@ -32,8 +34,7 @@ h3 {
 p, label {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    // font-size: 24px;
+    font-size: 24px;
 
     color: $primary-brown;
 }
@@ -48,6 +49,7 @@ strong {
 
 ul, ol, li {
     color: $primary-brown;
+    font-size: 24px;
 }
 
 ul {

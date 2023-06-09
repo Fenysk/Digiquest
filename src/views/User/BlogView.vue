@@ -2,7 +2,7 @@
   <div id="blog" class="
     xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16
   ">
-    <h2 class="text-center">Nos articles</h2>
+    <h1 class="text-center">Nos articles</h1>
     <Breadcrumb />
 
     <Pagination 

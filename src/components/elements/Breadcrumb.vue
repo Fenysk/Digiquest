@@ -1,10 +1,10 @@
 <template>
-    <nav class="text-center breadcrumb">
+    <nav class="text-center breadcrumb my-12">
         <span v-for="(item, index) in breadcrumb" :key="index">
             <router-link v-if="!last || (last && index < breadcrumb.length - 1)"
-             class="link" :to="`${item.link}`">{{ item.text }}</router-link>
-            <span class="link" v-else>{{ last }}</span>
-            <span class="primary-brown" v-if="index < breadcrumb.length - 1">/</span>
+             class="text-2xl link" :to="`${item.link}`">{{ item.text }}</router-link>
+            <span class="text-2xl link" v-else>{{ last }}</span>
+            <span class="text-2xl primary-brown" v-if="index < breadcrumb.length - 1">/</span>
         </span>
     </nav>
 </template>

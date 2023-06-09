@@ -9,10 +9,9 @@ import ConnexionView from "@/views/User/ConnexionView.vue";
 import AccountView from "@/views/User/AccountView.vue";
 import ContactView from "@/views/User/ContactView.vue";
 import RessourcesView from "@/views/User/RessourcesView.vue";
-import TestView from "@/views/User/TestView.vue";
 import GameView from "@/views/User/GameView.vue";
-
 import ProfessionnalView from "@/views/User/ProfessionnalView.vue";
+import SiteMapView from "@/views/User/SitemapView.vue";
 
 const routes = [
   {
@@ -179,6 +178,23 @@ const routes = [
         {
           text: "Mentions légales",
           link: "/legal",
+        }
+      ]
+    }
+  },
+  {
+    path: "/plan-du-site",
+    name: "SiteMapView",
+    component: SiteMapView,
+    meta: {
+      breadcrumb: [
+        {
+          text: "Accueil",
+          link: "/",
+        },
+        {
+          text: "Plan du site",
+          link: "/plan-du-site",
         },
       ],
     },
