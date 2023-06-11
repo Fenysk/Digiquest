@@ -14,8 +14,23 @@
             <label for="content">Contenu</label>
             <vue-editor id="editor" v-model="article.content" />
 
+            <!--
             <label for="tags">Tags</label>
             <input type="text" id="tags" v-model="article.tags">
+            -->
+            <span>Tags</span>
+            <div style="display:flex;">
+              <button id="tags" type="button" v-for="item,index of article.tags" :key="index" @click="removeTagAt(index)">
+                {{getArticleLabel(item)}}
+              </button>
+            </div>
+            ---
+            <span>Tags disponibles:</span>
+            <div style="display:flex;">
+              <button type="button" v-for="item, index of availableTags" :key="index" @click="addTag(item.id)">
+                {{ item.label}}
+              </button>
+            </div>
 
             <button type="submit">Créer</button>
         </form>
@@ -27,10 +42,13 @@
 <script>
 import axios from 'axios';
 import { VueEditor } from "vue3-editor";
+import  { getTags } from "@/api/Tags/getTags";
 
 export default {
+    components: { VueEditor },
     data() {
         return {
+            tagList: [],
             article: {
                 title: '',
                 content: '',
@@ -40,9 +58,43 @@ export default {
         };
     },
 
-    components: { VueEditor },
+    computed:{
+        availableTags() {
+            const available = this.tagList.filter(item => {
+                return this.article.tags.includes(item.id) === false;
+            })
+            return available;
+      }
+    },
+
+    async mounted() {
+        try {
+            // await getTags
+            this.tagList = await getTags();
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
 
     methods: {
+        addTag(id) {
+          console.log('in add')
+          this.article.tags.push(id);
+        },
+
+        removeTagAt(index) {
+          this.article.tags.splice(index,1)
+        },
+
+        getArticleLabel(id){
+          for (const item of this.tagList){
+            if (item.id === id) {
+              return item.label;
+            }
+          }
+        },
+
         createArticle() {
             const apiUrl = 'https://digiquest-back.herokuapp.com';
             axios.post(
