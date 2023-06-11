@@ -1,7 +1,8 @@
 <template>
     <div class="account-view xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16">
-        <h1 class="text-center">Bonjour {{ profile.firstName }} !</h1>
+        <h1 class="text-center">Bonjour {{ account.profile.firstName }} !</h1>
 
+  {{ account }}
         <div class="avatar mt-20">
             <h2 class="text-center mt-8 mb-8">Personnalise ton avatar</h2>
             <div class="container flex flex-row wrap gap-32 mt-16">
@@ -9,9 +10,13 @@
                     <p class="text-center mb-4">Choisis ton animal</p>
 
                     <div class="grille">
-                        <a v-for="animal in animals" :key="animal" @click.prevent href="" class="animal cursor-pointer">
-                            <img :src="require(`@/assets/picto/animals/${animal}.svg`)" :alt="animal" />
-                        </a>
+                        <div v-for="animal, index in animals" :key="index" class="flex flex-col">
+                            <a  @click.prevent="selectAnimal(animal)" href="" class="animal cursor-pointer" :class="{'selected' : account.avatarAnimal === animal}" >
+                                <img :src="require(`@/assets/picto/animals/${animal}.svg`)" :alt="animal" />
+                            </a>
+                            <span class="text-center">{{ animalLabels[animal] }}</span>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="colors">
@@ -33,8 +38,8 @@
             <h2 class="text-center">Informations personnelles</h2>
 
             <div class="inputs flex flex-col justify-center">
-                <input type="text" placeholder="Prénom" class="mt-4" v-model="profile.firstName" />
-                <input type="text" placeholder="Nom" class="mt-4" v-model="profile.lastName" />
+                <input type="text" placeholder="Prénom" class="mt-4" v-model="account.profile.firstName" />
+                <input type="text" placeholder="Nom" class="mt-4" v-model="account.profile.lastName" />
                 <input type="birthday" placeholder="Date de naissance" class="mt-4" v-model="birthDateToDisplay" />
             </div>
 
@@ -51,6 +56,7 @@
 <script>
 
 import { getProfile } from "@/api/User/getProfile";
+import { getUser } from "@/api/User/getUser";
 import { patchProfile } from "@/api/User/patchProfile";
 import { deleteProfile } from "@/api/User/deleteProfile";
 import jwtDecode from "jwt-decode";
@@ -64,8 +70,32 @@ export default {
 
     data() {
         return {
+            account: {
+              avatarAnimal: null,
+              avatarColor: null,
+              profile: {
+              },
+            },
             profile: {},
             birthDateToDisplay: "",
+            animalLabels: {
+              hedgehog: "Hérisson",
+              squirrel: "Ecureuil",
+              fox: "Renard",
+              beaver: "Castor",
+              hummingbird: "Colibri",
+              kiwi: "Kiwi",
+              dragonfly: "Libellule",
+              butterfly: "Papillon",
+              fish: "Poisson",
+              pufferfish: "Poisson-Lune",
+              otter: "Loutre",
+              turtle: "Tortue",
+              lion: "Lion",
+              panda: "Panda",
+              monkey: "Singe",
+              unicorn: "Licorne"
+            },
 
             animals: [
                 "hedgehog",
@@ -117,6 +147,10 @@ export default {
             });
         },
 
+        selectAnimal(animal) {
+          this.account.avatarAnimal = animal;
+        },
+
         updateProfile() {
             const date = new Date(this.birthDateToDisplay);
 
@@ -165,13 +199,14 @@ export default {
         },
     },
 
-    mounted() {
+    async mounted() {
         if (localStorage.getItem("token") === null) {
             this.$router.push("/connexion");
         } else {
             const token = localStorage.getItem("token");
             const profileId = jwtDecode(token).userId;
 
+            /*
             getProfile(profileId)
                 .then((profile) => {
                     this.profile = profile;
@@ -183,6 +218,17 @@ export default {
                         error
                     );
                 });
+
+            */
+          try {
+            const result = await getUser(profileId);
+            this.account = result;
+            this.birthDateToDisplay = this.account.profile.birthDate;
+
+          } catch (error) {
+            console.error("Erreur lors de la récupération du profil:", error); 
+           }
+
         }
     },
 };
@@ -282,5 +328,9 @@ input {
         }
 
     }
+}
+
+.selected {
+  border: 1px solid black;
 }
 </style>
