@@ -2,7 +2,6 @@
     <div class="account-view xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16">
         <h1 class="text-center">Bonjour {{ account.profile.firstName }} !</h1>
 
-  {{ account }}
         <div class="avatar mt-20">
             <h2 class="text-center mt-8 mb-8">Personnalise ton avatar</h2>
             <div class="container flex flex-row wrap gap-32 mt-16">
@@ -24,8 +23,8 @@
 
                     <div class="grille">
                         <article v-for="color in colors" :key="color"
-                            class="color rounded-full cursor-pointer p-1 border-2 border-black">
-                            <div :class="color" class="h-12 w-12 rounded-full">
+                            class="color rounded-full cursor-pointer p-1 border-2 border-black" :class="{'selected' : account.avatarColor === color}">
+                            <div :class="color" class="h-12 w-12 rounded-full" @click="selectColor(color)">
                             </div>
                         </article>
                     </div>
@@ -58,6 +57,7 @@
 import { getProfile } from "@/api/User/getProfile";
 import { getUser } from "@/api/User/getUser";
 import { patchProfile } from "@/api/User/patchProfile";
+import { patchUser } from "@/api/User/patchUser";
 import { deleteProfile } from "@/api/User/deleteProfile";
 import jwtDecode from "jwt-decode";
 
@@ -150,8 +150,11 @@ export default {
         selectAnimal(animal) {
           this.account.avatarAnimal = animal;
         },
+        selectColor(color) {
+          this.account.avatarColor = color;
+        },
 
-        updateProfile() {
+        async updateProfile() {
             const date = new Date(this.birthDateToDisplay);
 
             if (isNaN(date.getTime())) {
@@ -160,10 +163,11 @@ export default {
             }
 
             const isoDate = date.toISOString();
-            console.log(isoDate);
 
-            this.profile.birthDate = isoDate;
+            this.account.profile.birthDate = isoDate;
 
+
+            /*
             patchProfile(this.profile)
                 .then(() => {
                     location.reload();
@@ -171,6 +175,17 @@ export default {
                 .catch((error) => {
                     console.error('Erreur lors de la mise à jour du profil:', error);
                 });
+            */
+           try {
+             const token = localStorage.getItem("token");
+             const profileId = jwtDecode(token).userId;
+             await patchUser(profileId, this.account);
+             location.reload();
+           } catch (error) {
+              console.error('Erreur lors de la mise à jour du profil:', error);
+           }
+
+
         },
 
         deleteAccount() {

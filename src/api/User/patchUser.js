@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-export async function patchProfile(profile) {
+export async function patchUser(accountId, data) {
   const apiUrl = 'https://digiquest-back.herokuapp.com';
+
 
   try {
 
@@ -12,13 +13,17 @@ export async function patchProfile(profile) {
     const config = {
       headers: { "Authorization": `Bearer ${token}` }
     }
+
+    const {id, ...payload} = data;
+
+    /*
+    payload.profile.birthDate = payload.profile.birthDate.slice(0,10);
+    console.log('payload: ', payload)
+    */
+
     const response = await axios.patch(
-      `${apiUrl}/profile/${profile.profileId}`, 
-      {
-        firstName: profile.profileName,
-        lastName: profile.lastName,
-        birthDate: profile.birthDate,
-      },
+      `${apiUrl}/user/${accountId}`, 
+      payload,
       config
     );
     const message = response.data;
