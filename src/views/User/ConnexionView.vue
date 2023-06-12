@@ -110,32 +110,24 @@ export default {
         },
 
         async signup() {
-            const apiUrl = 'https://digiquest-back.herokuapp.com';
-            axios.post(`${apiUrl}/user`,
-                {
-                    "username": this.user.username,
-                    "password": this.user.password,
-                    "email": this.user.email,
-                    "firstName": this.user.firstName,
-                    "lastName": this.user.lastName,
-                    "birthDate": this.user.birthDateFormatted,
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }
-            ).then(response => {
-                    console.log(response.data);
-                    localStorage.setItem('token', response.token);
-                    this.token = response.data.token;
-                    this.$nextTick(() => {
-                        window.location.reload();
-                    })
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            try {
+              const payload = {
+                  "username": this.user.username,
+                  "password": this.user.password,
+                  "email": this.user.email,
+                  "firstName": this.user.firstName,
+                  "lastName": this.user.lastName,
+                  "birthDate": this.user.birthDateFormatted,
+              }
+              const response = await postUser(payload);
+              localStorage.setItem('token', response.token);
+              this.token = response.token;
+              this.$nextTick(() => {
+                window.location.reload();
+              })
+            } catch (error) {
+              console.log(error);
+            }
         },
     },
 
