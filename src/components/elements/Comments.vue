@@ -19,31 +19,28 @@
 
         <div class="container">
             <ul class="comments">
-                <li
-                    class="comment"
-                    v-for="comment in comments"
-                    :key="comment.id"
-                >
-                    <div class="comment-header">
-                        <b><span class="comment-author">{{ comment.account.username }}</span></b>
+                {{ account }}
+                <li class="comment
+                flex
+                " v-for="comment in comments" :key="comment.id">
+                    <div class="account">
+                        {{ comment.avatarAnimal }}
                     </div>
-                    <p class="comment-content">{{ comment.content }}</p>
+                    <div class="content">
+                        <div class="comment-header">
+                            <b><span class="comment-author">{{ comment.account.username }}</span></b>
+                        </div>
+                        <p class="comment-content">{{ comment.content }}</p>
+                    </div>
                 </li>
             </ul>
         </div>
 
         <form class="container">
-            <textarea
-                placeholder="Partagez votre avis et votre expérience..."
-                v-model="user_comment"
-            ></textarea>
+            <textarea placeholder="Partagez votre avis et votre expérience..." v-model="user_comment"></textarea>
 
             <div class="flex justify-center mt-4">
-                <Button
-                    class="cursor-pointer"
-                    text="Envoyer mon avis"
-                    @click="postComment"
-                />
+                <Button class="cursor-pointer" text="Envoyer mon avis" @click="postComment" />
             </div>
         </form>
     </div>
@@ -75,6 +72,8 @@ export default {
         return {
             user_comment: "",
             comments: [],
+            isConnected: false,
+            accounts: {},
         };
     },
 
@@ -108,11 +107,10 @@ export default {
 
             if (token) {
                 const accountId = jwtDecode(token).userId;
-                
+
                 postComment(accountId, comment.articleId, comment.content)
                     .then((comment) => {
                         console.log("Le commentaire a été posté :", comment);
-                        this.getComments(this.articleId);
                     })
                     .catch((error) => {
                         console.error(
@@ -134,8 +132,13 @@ export default {
 
         getComments(articleId) {
             getComments(articleId)
-                .then((comments) => {
-                    this.comments = comments;
+                .then(async (comments) => {
+                    const newComments = await Promise.all(comments.map(async (comment) => {
+                        const profile = await getProfile(comment.accountId);
+                        return { ...comment, avatarAnimal: profile.avatarAnimal };
+                    }));
+
+                    this.comments = newComments;
                 })
                 .catch((error) => {
                     console.error(
@@ -144,16 +147,14 @@ export default {
                     );
                 });
         },
+
     },
 
-    updated() {
-        this.$nextTick(function () {
-            this.getComments(this.articleId);
-        });
-    },
+    async mounted() {
 
+        const id = this.$route.params.id;
+        this.getComments(id);
 
-    mounted() {
         if (this.user_comment == "") {
             if (localStorage.getItem("currentComments") === null) {
                 localStorage.setItem("currentComments", JSON.stringify([]));
@@ -177,6 +178,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/scss/variables.scss";
+
 #comments {
     background-color: $secondary-blue;
     margin-top: 4rem;

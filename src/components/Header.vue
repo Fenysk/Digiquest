@@ -4,7 +4,7 @@
                     ">
 
         <nav class="flex">
-            <a href="/" class="branding" >
+            <a href="/" class="branding">
                 <img class="logo" src="@/assets/logo/digiquest_blue.svg" alt="Logo DigiQuest">
             </a>
 
@@ -30,6 +30,9 @@
                 <li>
                     <MenuButton v-if="isConnected" type="account" link="/my-account" />
                     <MenuButton v-else type="connexion" link="/connexion" />
+                    <a href="" class="animal cursor-pointer">
+                        <!-- <img :src="require(`@/assets/picto/animals/${account.avatarAnimal}.svg`)" :alt="animal" /> -->
+                    </a>
                 </li>
                 <li>
                     <MenuButton type="contact" link="/contact-us" />
@@ -72,6 +75,7 @@
 
 <script>
 import MenuButton from './elements/MenuButton.vue';
+import { getUser } from "@/api/User/getUser";
 
 export default {
     name: "Header",
@@ -79,19 +83,35 @@ export default {
 
     data() {
         return {
-            isMenuOpen: false
+            isMenuOpen: false,
+            account: {
+                avatarAnimal: "cat",
+                avatarColor: "blue",
+            },
         }
     },
 
     methods: {
         toggleMenu() {
             this.isMenuOpen = !this.isMenuOpen;
-        }
+        },
     },
 
     computed: {
         isConnected() {
             return localStorage.getItem("token") ? true : false;
+        }
+    },
+
+    async mounted() {
+        if (this.isConnected) {
+            try {
+                const result = await getUser(profileId);
+                this.account = result;
+
+            } catch (error) {
+                console.error("Erreur lors de la récupération du profil:", error);
+            }
         }
     }
 }

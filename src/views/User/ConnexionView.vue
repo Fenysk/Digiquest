@@ -33,10 +33,11 @@
             </div>
         </form>
         
-        <ul v-if="isSignUp">
-          <li>Nous stockons vos informations personnelles (nom, prénom, email, date de naissance, résultat de tests) afin de vous identifier sur le site.</li>
-          <li>Nous ne les divulguerons jamais à qui que ce soit sans votre accord.</li>
-          <li>Elles seront automatiquement effacées lors de votre désinscription.</li>
+        <ul v-if="isSignUp" class="conditions">
+            <h3 class="mb-4">RGPD et données personnelles</h3>
+            <li>Nous stockons vos informations personnelles (nom, prénom, email, date de naissance, résultat de tests) afin de vous identifier sur le site.</li>
+            <li>Nous ne les divulguerons jamais à qui que ce soit sans votre accord.</li>
+            <li>Elles seront automatiquement effacées lors de votre désinscription.</li>
         </ul>
     </div>    
 </template>
@@ -168,6 +169,17 @@ input {
     &::placeholder {
         color: $primary-brown;
         opacity: 0.5;
+    }
+}
+.conditions {
+    padding: 24px 32px;
+    border-radius: 10px;
+    margin-top: 24px;
+    background-color: $secondary-blue;
+    li {
+        color: $primary-brown;
+        list-style-type: disc;
+        margin-left: 24px;
     }
 }
 </style>

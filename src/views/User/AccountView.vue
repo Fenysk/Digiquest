@@ -30,7 +30,6 @@
                     </div>
                 </div>
             </div>
-            <Button :text="'Valider'" class="cursor-pointer" />
         </div>
 
         <div class="personal-informations mt-16">
@@ -346,6 +345,7 @@ input {
 }
 
 .selected {
-  border: 1px solid black;
+    transform: scale(1.2);
+    transition: transform 0.2s ease-in-out;
 }
 </style>

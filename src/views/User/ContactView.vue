@@ -3,7 +3,6 @@
     xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16
     ">
         <h1 class="text-center">Vous souhaitez nous contactez ?</h1>
-        <Breadcrumb />
         <h2 class="mt-8 text-center">Vous pouvez nous contacter via ce formulaire</h2>
 
         <form class="mt-16">
@@ -40,14 +39,12 @@
 import { getProfile } from '@/api/User/getProfile';
 import jwtDecode from 'jwt-decode';
 
-import Breadcrumb from "@/components/elements/Breadcrumb.vue";
 import Button from "@/components/elements/Button.vue";
 
 export default {
     name: "ContactView",
 
     components: {
-        Breadcrumb,
         Button,
     },
 

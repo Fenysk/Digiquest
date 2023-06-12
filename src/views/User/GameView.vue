@@ -1,5 +1,5 @@
 <template>
-    <div id="game" class="xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300">
+    <div id="game" class="xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 overflow-hidden">
 
         <!-- Game Content -->
         <div class="content">
@@ -41,7 +41,8 @@
                 <Colibri class="animal" />
                 -->
                 
-                <img src="../../assets/game/colibri_small.gif" />
+                <img class="max-h-96 w-auto
+                " src="../../assets/game/colibri_small.gif" />
 
                 <div class="content">
                     <!-- Question -->
