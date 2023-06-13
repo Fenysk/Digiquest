@@ -24,7 +24,9 @@
                 flex
                 " v-for="comment in comments" :key="comment.id">
                     <div class="account">
-                        {{ comment.avatarAnimal }}
+                        <div class="avatar-color" :class="comment.account.avatarColor" style="border-radius:50%;">
+                          <img class="avatar-animal" :src="require(`@/assets/picto/animals/${comment.account.avatarAnimal}.svg`)"/>
+                        </div>
                     </div>
                     <div class="content">
                         <div class="comment-header">
@@ -204,12 +206,89 @@ export default {
         }
     }
 
+    .avatar-color{
+      height: 100px;
+      width: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .avatar-animal {
+        width: 75px;
+        height: 75px;
+        display: block;
+    }
+
     .comment {
         width: 100%;
         background-color: rgba($primary-white, 0.7);
         border-radius: 0.5rem;
         padding: 1rem;
         margin-bottom: 1rem;
+    }
+    .red {
+            background-color: #bf1212;
+    }
+
+    .orange {
+        background-color: #ff7f00;
+    }
+
+    .yellow {
+        background-color: rgb(255, 242, 0);
+    }
+
+    .green {
+        background-color: #13d413;
+    }
+
+    .blue {
+        background-color: #1111d8;
+    }
+
+    .purple {
+        background-color: #a832a8;
+    }
+
+    .pink {
+        background-color: #ff00ff;
+    }
+
+    .brown {
+        background-color: #a83232;
+    }
+
+    .black {
+        background-color: #000000;
+    }
+
+    .white {
+        background-color: #ffffff;
+    }
+
+    .grey {
+        background-color: #808080;
+    }
+
+    .beige {
+        background-color: #f5f5dc;
+    }
+
+    .turquoise {
+        background-color: #40e0d0;
+    }
+
+    .gold {
+        background-color: #ffd700;
+    }
+
+    .silver {
+        background-color: #c0c0c0;
+    }
+
+    .bronze {
+        background-color: #cd7f32;
     }
 }
 </style>
