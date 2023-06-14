@@ -141,9 +141,11 @@ export default {
     methods: {
         async checkIfAdmin() {
             this.isAdmin = await getIsAdmin();
+            /*
             if (this.isAdmin !== "OK") {
                 this.isAdmin = await getIsRedactor();
             }
+            */
         },
 
         logout() {
