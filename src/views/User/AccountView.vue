@@ -188,7 +188,7 @@ export default {
         },
 
         deleteAccount() {
-            deleteProfile(this.profile.id)
+            deleteProfile(this.account.id)
                 .then(() => {
                     localStorage.removeItem("token");
                     localStorage.removeItem("profileId");
