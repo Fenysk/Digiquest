@@ -79,6 +79,13 @@ export default {
 <style lang="scss">
 @import "@/assets/scss/variables.scss";
 
+h1 {
+    width: 70%;
+    margin: auto;
+    white-space: pre-wrap !important;
+    line-height: 1.2 !important;
+}
+
 .article-content {
     h3 {
         margin-top: 32px !important;

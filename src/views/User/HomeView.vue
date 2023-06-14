@@ -35,7 +35,8 @@
             <div class="last_news_container">
                 <article v-for="article in articles" :key="article.title">
                     <img :src="article.image" alt="" />
-                    <h3 class="text-center my-4">{{ article.title }}</h3>
+                    <h3 class="text-center my-4 truncate
+                    ">{{ article.title }}</h3>
                     <p v-html="truncateHTML(article.content, 200)"></p>
                     <div class="flex justify-center">
                         <Button :text="'Lire l\'article'" :href="'/blog/article/' + article.id" secondary />

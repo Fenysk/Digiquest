@@ -103,6 +103,7 @@ export default {
             )
                 .then(response => {
                     console.log('Nouvel article créé:', response.data);
+                    this.$router.push('/blog/article/' + response.data.id);
                     // Faire quelque chose avec la réponse, par exemple rediriger vers la page de l'article créé
                 })
                 .catch(error => {
