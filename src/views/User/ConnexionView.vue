@@ -6,41 +6,56 @@
         <h2 class="text-center">Connexion</h2>
         <form @submit.prevent="login" class="mt-6">
 
-            <input type="username" id="username" placeholder="Pseudo" v-model="user.username" required autofocus/>
+            <input @blur="interacted = true" :class="{ interacted: interacted }"
+             type="text" id="username"
+                placeholder="Pseudo" v-model="user.username" required pattern="^[a-zA-Z0-9_.-]*$"
+                title="Le pseudo ne doit contenir que des caractères alphanumériques, des tirets, des underscores et des points." />
 
-            <input v-if="isSignUp" type="firstName" id="firstName" placeholder="Prénom" v-model="user.firstName" required />
+            <input @blur="interacted = true" :class="{ interacted: interacted }" v-if="isSignUp" type="text" id="firstName"
+                placeholder="Prénom" v-model="user.firstName" required title="Le prénom est requis." />
 
-            <input v-if="isSignUp" type="lastName" id="lastName" placeholder="Nom" v-model="user.lastName" required />
+            <input @blur="interacted = true" :class="{ interacted: interacted }" v-if="isSignUp" type="text" id="lastName"
+                placeholder="Nom" v-model="user.lastName" required title="Le nom est requis." />
 
-            <input v-if="isSignUp" type="text" id="email" placeholder="Email" v-model="user.email" required />
+            <input @blur="interacted = true" :class="{ interacted: interacted }" v-if="isSignUp" type="email" id="email"
+                placeholder="Email" v-model="user.email" required title="Veuillez entrer un email valide." />
 
-            <input type="password" id="password" placeholder="Mot de passe" v-model="user.password" required />
+            <input @blur="interacted = true" :class="{ interacted: interacted }" type="password" id="password"
+                placeholder="Mot de passe" v-model="user.password" required title="Le mot de passe est requis." />
 
-            <input v-if="isSignUp" type="date" id="birthDate" placeholder="Date de naissance" v-model="user.birthDate" required />
-
-
+            <input @blur="interacted = true" :class="{ interacted: interacted }" v-if="isSignUp" type="date" id="birthDate"
+                placeholder="Date de naissance" v-model="user.birthDate" required
+                title="La date de naissance est requise." />
 
             <div class="flex justify-center mt-4">
-                <Button class="cursor-pointer"
-                    :text="isSignUp ? 'S\'inscrire' : 'Se connecter'"
-                    @click="isSignUp ? signup() : login()"
-                />
-                <Button class="cursor-pointer"
-                    :text="isSignUp ? 'J\ai déjà un compte' : 'Je n\'ai pas de compte'"
-                    @click="switchMode" 
-                    secondary
-                />
+                <Button class="cursor-pointer" :text="isSignUp ? 'S\'inscrire' : 'Se connecter'"
+                    @click="isSignUp ? signup() : login()" />
+                <Button class="cursor-pointer" :text="isSignUp ? 'J\ai déjà un compte' : 'Je n\'ai pas de compte'"
+                    @click="switchMode" secondary />
             </div>
         </form>
-        
+
         <ul v-if="isSignUp" class="conditions">
             <h3 class="mb-4">RGPD et données personnelles</h3>
-            <li>Nous stockons vos informations personnelles (nom, prénom, email, date de naissance, résultat de tests) afin de vous identifier sur le site.</li>
+            <li>Nous stockons vos informations personnelles (nom, prénom, email, date de naissance, résultat de tests) afin
+                de vous identifier sur le site.</li>
             <li>Nous ne les divulguerons jamais à qui que ce soit sans votre accord.</li>
             <li>Elles seront automatiquement effacées lors de votre désinscription.</li>
         </ul>
-    </div>    
+    </div>
 </template>
+
+<style scoped lang="scss">
+.interacted {
+    &:invalid {
+        border: 1px solid red;
+    }
+
+    &:valid {
+        border: 1px solid green;
+    }
+}
+</style>
 
 <script>
 import axios from "axios";
@@ -56,6 +71,7 @@ export default {
 
     data() {
         return {
+            interacted: false,
             user: {
                 username: '',
                 firstName: '',
@@ -98,13 +114,13 @@ export default {
                     }
                 }
             ).then(response => {
-                    console.log(response.data);
-                    localStorage.setItem('token', response.data.token);
-                    this.token = response.data.token;
-                    this.$nextTick(() => {
-                        window.location.reload();
-                    });
-                })
+                console.log(response.data);
+                localStorage.setItem('token', response.data.token);
+                this.token = response.data.token;
+                this.$nextTick(() => {
+                    window.location.reload();
+                });
+            })
                 .catch((error) => {
                     console.log(error);
                 });
@@ -112,22 +128,22 @@ export default {
 
         async signup() {
             try {
-              const payload = {
-                  "username": this.user.username,
-                  "password": this.user.password,
-                  "email": this.user.email,
-                  "firstName": this.user.firstName,
-                  "lastName": this.user.lastName,
-                  "birthDate": this.user.birthDateFormatted,
-              }
-              const response = await postUser(payload);
-              localStorage.setItem('token', response.token);
-              this.token = response.token;
-              this.$nextTick(() => {
-                window.location.reload();
-              })
+                const payload = {
+                    "username": this.user.username,
+                    "password": this.user.password,
+                    "email": this.user.email,
+                    "firstName": this.user.firstName,
+                    "lastName": this.user.lastName,
+                    "birthDate": this.user.birthDateFormatted,
+                }
+                const response = await postUser(payload);
+                localStorage.setItem('token', response.token);
+                this.token = response.token;
+                this.$nextTick(() => {
+                    window.location.reload();
+                })
             } catch (error) {
-              console.log(error);
+                console.log(error);
             }
         },
     },
@@ -171,15 +187,16 @@ input {
         opacity: 0.5;
     }
 }
+
 .conditions {
     padding: 24px 32px;
     border-radius: 10px;
     margin-top: 24px;
     background-color: $secondary-blue;
+
     li {
         color: $primary-brown;
         list-style-type: disc;
         margin-left: 24px;
     }
-}
-</style>
+}</style>

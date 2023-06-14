@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/User/HomeView.vue";
 import ErrorView from "@/views/ErrorView.vue";
-import LegalView from "@/views/LegalView.vue";
+import LegalsView from "@/views/User/LegalsView.vue";
 import BlogView from "@/views/User/BlogView.vue";
 import ArticleView from "@/views/User/ArticleView.vue";
 import NewArticleView from "@/views/Admin/NewArticleView.vue";
@@ -133,7 +133,7 @@ const routes = [
   {
     path: "/blog/new",
     name: "NewArticleView",
-    component: NewArticleView,
+    component: NewArticleView
   },
 
   {
@@ -167,8 +167,8 @@ const routes = [
 
   {
     path: "/legal",
-    name: "LegalView",
-    component: LegalView,
+    name: "Mentions légales",
+    component: LegalsView,
     meta: {
       breadcrumb: [
         {

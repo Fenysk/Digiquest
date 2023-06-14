@@ -51,22 +51,22 @@ export default {
                     children: [],
                 },
                 {
-                    name: "AccountView",
+                    name: "Mon compte",
                     link: "/my-account",
                     children: [],
                 },
                 {
-                    name: "ContactView",
+                    name: "Contactez-nous",
                     link: "/contact-us",
                     children: [],
                 },
                 {
-                    name: "SitemapView",
+                    name: "Mentions légales",
                     link: "/legal",
                     children: [],
                 },
                 {
-                    name: "SiteMapView",
+                    name: "Plan du site",
                     link: "/plan-du-site",
                     children: [],
                 },

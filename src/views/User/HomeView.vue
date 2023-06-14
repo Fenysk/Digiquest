@@ -143,12 +143,12 @@ export default {
     justify-content: center;
     align-items: center;
 
-    background-image: url("../../assets/images/julia-maior-PjR6RRsJSRE-unsplash.jpg");
+    background-image: url("@/assets/images/MicrosoftTeams-image.png");
     background-size: cover;
     background-position: center;
 
     .content {
-        backdrop-filter: blur(4px);
+        backdrop-filter: blur(5px);
         height: 100%;
         width: 100%;
 
