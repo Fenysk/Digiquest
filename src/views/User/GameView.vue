@@ -4,6 +4,7 @@
         <!-- Game Content -->
         <div class="content">
 
+          <template v-if="isLogged">
             <div class="menu flex justify-between">
                 <Button :text="'Faire une pause'" :href="''" class="cursor-pointer" @click.prevent="interrupt()" />
                 <!-- Progress Bar -->
@@ -76,6 +77,14 @@
             </div>
 
             <!-- End Main Game -->
+          </template>
+          <!-- Display if visitor is not logged -->
+          <template v-else>
+            <p>Désolé, il faut être connecté pour acceder à ce test
+                <Button :text="'Se connecter'" :href="'/connexion/'" class="cursor-pointer" />
+            </p>
+            
+          </template>
         </div>
         <!-- End Game Content -->
 
@@ -90,6 +99,7 @@ import { getAccountPendingTests } from "@/api/PendingTest/getAccountPendingTests
 import { postPendingTest } from "@/api/PendingTest/postPendingTest";
 import { patchPendingTest } from "@/api/PendingTest/patchPendingTest";
 import { deletePendingTest } from "@/api/PendingTest/deletePendingTest";
+import { getIsLogged, isLogged } from '@/api/Auth/getIsLogged';
 import jwtDecode from "jwt-decode";
 
 
@@ -102,10 +112,13 @@ export default {
     },
 
     async mounted() {
-        // TODO check with server if user is register
+        try {
+          const response = await getIsLogged();
+        } catch (error) {
+          this.isLogged = false;
+          this.$router.push('/connexion');
+        }
 
-        // TODO check if user already has pendingtest
-        // if yes -> set pendingTestId, answers and current step
         try {
             const token = localStorage.getItem('token');
             const userId = jwtDecode(token).userId;
@@ -124,6 +137,7 @@ export default {
     },
     data() {
         return {
+            isLogged: true,
             pendingTestId: null,
             currentStep: 0,
             scenario: [
