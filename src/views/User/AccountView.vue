@@ -21,6 +21,7 @@
 
                     </div>
                 </div>
+                {{ new Date(birthDateToDisplay)toISOString() }}
                 <div class="colors">
                     <p class="text-center mb-4">Choisis ta couleur</p>
 

@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 export async function patchUser(accountId, data) {
-  const apiUrl = 'https://digiquest-back.herokuapp.com';
+  //const apiUrl = 'https://digiquest-back.herokuapp.com';
+  const apiUrl = 'http://localhost:3000';
 
 
   try {
