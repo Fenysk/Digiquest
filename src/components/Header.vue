@@ -76,6 +76,8 @@
 <script>
 import MenuButton from './elements/MenuButton.vue';
 import { getUser } from "@/api/User/getUser";
+import jwtDecode from "jwt-decode";
+
 
 export default {
     name: "Header",
@@ -106,6 +108,8 @@ export default {
     async mounted() {
         if (this.isConnected) {
             try {
+                const token = localStorage.getItem("token");
+                const profileId = jwtDecode(token).userId;
                 const result = await getUser(profileId);
                 this.account = result;
 
