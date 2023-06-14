@@ -144,37 +144,52 @@ export default {
                 {
                     // Question 1 d'un diagnostic de TDAH
                     question: "Au cinéma, il y a la queue pour le film que je veux voir. Par contre, il n'y a personne pour voir un film qui m'interesse moins.",
-                    answers: ["J'arrive a rester patient", "Je perd parfois patience", "J'ai souvent du mal à patienter", "Soit on voit l'autre film tout desuite, soit on s'en va, mais je n'attends pas!"]
+                    answers: ["J'arrive à rester patient", "Je perd parfois patience", "C'est difficile de patienter", "Soit on voit l'autre film tout de suite, soit on s'en va, mais je n'attends pas!"]
                 },
                 {
-                    // Question 1 d'un diagnostic de TDAH
-                    question: "Zut, j'ai encore oublié de sortir les poubelles !",
-                    answers: ["Je me souviens toujours de ce que je dois faire.", "Il m'arrive d'oublier de faire les choses.", "J'oublie souvent des tâches.", "J'oublie tout le temps les choses."]
+                    // Question 2 d'un diagnostic de TDAH
+                    question: "Zut, j'ai encore oublié de faire mes dévoirs!",
+                    answers: ["Je me souviens toujours de ce que je dois faire", "Ca m'arrive d'oublier de faire des choses", "J'oublie souvent des tâches", "je suis très tête-en-l'air, j'oublie toujours tout"]
                 },
                 {
                     // Question 3 d'un diagnostic de TDAH
                     question: "Pfff, c'est long de finir ce puzzle, je préfère faire autre chose.",
-                    answers: ["J'arrive à rester concentré.", "Parfois, je perds mon attention pendant une tâche.", "Souvent, je suis distrait pendant une tâche.", "Je ne peux jamais rester concentré pendant une tâche."]
+                    answers: ["J'arrive à rester concentré", "J'ai parfois envie d'arrêter", "J'arrête souvent les choses quand elles sont pénibles", "Je ne peux jamais rester concentré pendant une tâche"]
                 },
                 {
                     // Question 4 d'un diagnostic de TDAH
-                    question: "Qu'est-ce que tu disais maman ? J'étais en train de penser à mon prochain match de foot.",
-                    answers: ["J'écoute toujours quand on me parle.", "Parfois, je ne prête pas attention quand on me parle.", "Souvent, je semble ne pas écouter quand on me parle.", "Je ne prête jamais attention quand on me parle."]
+                    question: "Qu'est-ce que tu disais, maman ? J'étais en train de penser à mon prochain match de foot.",
+                    answers: ["J'écoute toujours quand on me parle", "Parfois, je n'écoute pas trop", "Je perds souvent le fil pendant une discussion", "On doit sans arrêt me rappeler d'écouter"]
                 },
                 {
                     // Question 6 d'un diagnostic de TDAH
+                    question: "En classe, j'ai besoin de bien me concentrer pour faire un exercice...",
+                    answers: ["Je peux le faire sans problème", "C'est parfois compliqué, mais je peux le faire", "C'est difficile, je perd souvent ma concentration", "J'abandonne les choses dès qu'il faut se concentrer"]
+                },
+                {
+                    // Question 7 d'un diagnostic de TDAH
                     question: "J'ai un devoir de maths, un dessin à faire et un livre à lire. Je ne sais pas par où commencer.",
-                    answers: ["J'arrive à rester organisé.", "Parfois, je ne sais pas comment organiser mes activités.", "Souvent, j'ai du mal à organiser mes tâches.", "Je suis toujours désorganisé."]
+                    answers: ["J'arrive à rester organisé", "Parfois, je ne sais pas comment organiser mes activités", "J'ai du mal à décider par quoi commencer", "Je ne sais pas quoi faire en premier, alors je ne fais rien"]
                 },
                 {
                     // Question 8 d'un diagnostic de TDAH
-                    question: "Où ai-je mis mon stylo ? Je suis sûr de l'avoir mis dans mon sac à dos.",
-                    answers: ["Je ne pas souvent mes affaires.", "Parfois, je perds les objets dont j'ai besoin.", "Souvent, je ne sais pas où sont les objets dont j'ai besoin.", "Je perds toujours mes affaires."]
+                    question: "Où ai-je mis mon stylo ? Je suis sûr.e de l'avoir mis dans mon sac à dos.",
+                    answers: ["Je ne perds pas souvent mes affaires", "Parfois, je perds les objets dont j'ai besoin", "Ca m'arrive souvent, même pour des objets importants", "Je perds toujours mes affaires"]
                 },
                 {
                     // Question 9 d'un diagnostic de TDAH
-                    question: "Quand je suis assis en classe...",
-                    answers: ["Je peux rester immobile pendant longtemps.", "Parfois, je bouge les mains ou les jambes sans y penser", "Je bouge souvent, je bat des jambes ou des bras.", "Je ne peux pas rester en place, je me tortille sur ma chaise, je me lève parfois."]
+                    question: "Quand je suis assis.e en classe...",
+                    answers: ["Je peux rester immobile pendant longtemps", "Parfois, je bouge les mains ou les jambes sans y penser", "Je bouge souvent, je bat des jambes ou des bras", "Je ne peux pas rester en place, je me tortille sur ma chaise, je me lève parfois"]
+                },
+                {
+                    // Question 10 d'un diagnostic de TDAH
+                    question: "Quand je dois faire quelque chose d'ennuyeux ou répétitif...",
+                    answers: ["Je le fais sans erreur", "Je suis un peu dans la lune", "Je ne m'y interesse pas, je suis étourdi", "Je ne fais pas attention, je fais beaucoup d'erreurs"]
+                },
+                {
+                    // Question 11 d'un diagnostic de TDAH
+                    question: "Il y a beaucoup de bruit dans ce restaurant...",
+                    answers: ["Je ne le remarque pas", "Je suis un peu gêné, sans plus", "Ca me distrait, j'ai du mal à l'ignorer", "Ca prend toute mon attention"]
                 },
             ],
             answers: [],
@@ -256,10 +271,12 @@ export default {
             }, 0);
             const score = total / (this.scenario.length * 5) * 100
             this.result = `Tu as un score de ${score.toFixed(0)} /100`
-            if (total > this.scenario.length * 2) {
-                this.comment += "Ca peut être le signe d'un TDA-H; tu devrais peut-être voir un spécialiste.";
+            if (total > this.scenario.length * 3.5) {
+                this.comment = "Il y a de bonne chances que tu ait un TDA-H: tu devrais voir avec tes parents si tu devrais voir un spécialiste.";
+            } else if (total > this.scenario.length * 2.5) {
+                this.comment = "Ca peut être le signe d'un TDA-H; vois avec tes parents si tu devrais voir un spécialiste.";
             } else {
-                this.comment += "Tu ne sembles pas avoir de TDA-H. Mais nous somme pas des spécialistes! Si tu as toujours un doute, n'hésite pas à en voir un!";
+                this.comment = "Tu ne sembles pas avoir de TDA-H. Mais nous somme pas des spécialistes! Si tu as toujours un doute, n'hésite pas à en voir un!";
             }
         }
     }
