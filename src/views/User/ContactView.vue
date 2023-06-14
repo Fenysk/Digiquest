@@ -5,7 +5,7 @@
         <h1 class="text-center">Vous souhaitez nous contactez ?</h1>
         <h2 class="mt-8 text-center">Vous pouvez nous contacter via ce formulaire</h2>
 
-        <form class="mt-16">
+        <form class="mt-16" v-if="!sended">
             <div class="flex flex-row items-center space-x-4" v-if="!isConnected">
                 <div class="flex flex-col">
                     <label>Votre Prénom</label>
@@ -32,6 +32,11 @@
                 <Button :text="'Envoyer'" @click="sendMessage" class="cursor-pointer" />
             </div>
         </form>
+
+        <div class="flex flex-col items-center my-32" v-if="sended">
+            <h3 class="mt-8 text-center">Votre message a bien été envoyé !</h3>
+            <p class="mt-4 text-center">Nous vous répondrons dans les plus brefs délais.</p>
+        </div>
     </div>
 </template>
 
@@ -54,7 +59,14 @@ export default {
             user: '',
             token: '',
             message: '',
+            sended: false,
         }
+    },
+
+    methods: {
+        sendMessage() {
+            this.sended = true;
+        },
     },
 
     mounted() {

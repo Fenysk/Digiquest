@@ -3,16 +3,18 @@
     <Header :screen=screenType ></Header>
     <router-view class="mt-16" />
     <Footer></Footer>
+    <Cookies class="fixed bottom-0 left-0"></Cookies>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
+import Cookies from "./components/elements/Cookies.vue";
 
 export default {
   name: 'App',
-  components: { Header, Footer },
+  components: { Header, Footer, Cookies },
 
   data() {
     return {
