@@ -2,6 +2,8 @@
     <div class="account-view xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16">
         <h1 class="text-center">Bonjour {{ account.profile.firstName }} !</h1>
 
+        <h2>{{account.id}} {{ isAdminOrRedactor }}</h2>
+
         <div class="avatar mt-20">
             <h2 class="text-center mt-8 mb-8">Personnalise ton avatar</h2>
             <div class="container flex flex-row wrap gap-32 mt-16">
@@ -59,9 +61,8 @@
 
 <script>
 
-import { getProfile } from "@/api/User/getProfile";
+import { getIsAdmin } from "@/api/Auth/getIsAdmin";
 import { getUser } from "@/api/User/getUser";
-import { patchProfile } from "@/api/User/patchProfile";
 import { patchUser } from "@/api/User/patchUser";
 import { deleteProfile } from "@/api/User/deleteProfile";
 import jwtDecode from "jwt-decode";
@@ -75,6 +76,7 @@ export default {
 
     data() {
         return {
+            isAdminOrRedactor: false,
             updated: false,
             account: {
                 avatarAnimal: null,
@@ -160,6 +162,11 @@ export default {
             this.account.avatarColor = color;
         },
 
+        async checkIfAdminOrRedactor() {
+            this.isAdminOrRedactor = await getIsAdmin();
+            console.log(this.isAdminOrRedactor);
+        },
+
         async updateProfile() {
             const date = new Date(this.birthDateToDisplay);
 
@@ -228,6 +235,8 @@ export default {
             }
 
         }
+
+        this.checkIfAdminOrRedactor();
     },
 };
 </script>

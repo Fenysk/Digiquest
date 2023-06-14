@@ -133,7 +133,7 @@ const routes = [
   {
     path: "/blog/new",
     name: "NewArticleView",
-    component: NewArticleView,
+    component: NewArticleView
   },
 
   {
