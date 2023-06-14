@@ -46,16 +46,17 @@
             </div>
         </div>
 
-        <Button secondary :text="'Se déconnecter'" class="cursor-pointer" @click="logout" />
-        <Button :text="'Supprimer mon compte'" class="cursor-pointer" @click="deleteAccount" />
+        <Button :text="'Se déconnecter'" class="cursor-pointer" @click="logout" />
+        <Button secondary :text="'Supprimer mon compte'" class="cursor-pointer" @click="deleteAccount" />
+        <Button secondary :text="'Nouvel article'" class="cursor-pointer float-right" @click="$router.push('/blog/new')" v-if="isAdmin" />
     </div>
 </template>
 
 <script>
 
-import { getProfile } from "@/api/User/getProfile";
+import { getIsAdmin } from "@/api/Auth/getIsAdmin";
+import { getIsRedactor } from "@/api/Auth/getIsRedactor";
 import { getUser } from "@/api/User/getUser";
-import { patchProfile } from "@/api/User/patchProfile";
 import { patchUser } from "@/api/User/patchUser";
 import { deleteProfile } from "@/api/User/deleteProfile";
 import jwtDecode from "jwt-decode";
@@ -69,6 +70,7 @@ export default {
 
     data() {
         return {
+            isAdmin: false,
             account: {
               avatarAnimal: null,
               avatarColor: null,
@@ -137,6 +139,13 @@ export default {
     },
 
     methods: {
+        async checkIfAdmin() {
+            this.isAdmin = await getIsAdmin();
+            if (this.isAdmin !== "OK") {
+                this.isAdmin = await getIsRedactor();
+            }
+        },
+
         logout() {
             localStorage.removeItem("token");
             localStorage.removeItem("profileId");
@@ -206,6 +215,8 @@ export default {
     },
 
     async mounted() {
+        await this.checkIfAdmin();
+
         if (localStorage.getItem("token") === null) {
             this.$router.push("/connexion");
         } else {
