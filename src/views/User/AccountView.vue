@@ -2,8 +2,6 @@
     <div class="account-view xl:px-64 lg:px-32 md:px-16 sm:px-8 px-4 ease-in-out duration-300 py-16">
         <h1 class="text-center">Bonjour {{ account.profile.firstName }} !</h1>
 
-        <h2>{{account.id}} {{ isAdminOrRedactor }}</h2>
-
         <div class="avatar mt-20">
             <h2 class="text-center mt-8 mb-8">Personnalise ton avatar</h2>
             <div class="container flex flex-row wrap gap-32 mt-16">
@@ -12,23 +10,20 @@
 
                     <div class="grille">
                         <div v-for="animal, index in animals" :key="index" class="flex flex-col">
-                            <a @click.prevent="selectAnimal(animal)" href="" class="animal cursor-pointer"
-                                :class="{ 'selected': account.avatarAnimal === animal }">
+                            <a  @click.prevent="selectAnimal(animal)" href="" class="animal cursor-pointer" :class="{'selected' : account.avatarAnimal === animal}" >
                                 <img :src="require(`@/assets/picto/animals/${animal}.svg`)" :alt="animal" />
                             </a>
                             <span class="text-center">{{ animalLabels[animal] }}</span>
                         </div>
-
+                        
                     </div>
                 </div>
-                {{ new Date(birthDateToDisplay)toISOString() }}
                 <div class="colors">
                     <p class="text-center mb-4">Choisis ta couleur</p>
 
                     <div class="grille">
                         <article v-for="color in colors" :key="color"
-                            class="color rounded-full cursor-pointer p-1 border-2 border-black"
-                            :class="{ 'selected': account.avatarColor === color }">
+                            class="color rounded-full cursor-pointer p-1 border-2 border-black" :class="{'selected' : account.avatarColor === color}">
                             <div :class="color" class="h-12 w-12 rounded-full" @click="selectColor(color)">
                             </div>
                         </article>
@@ -37,22 +32,18 @@
             </div>
         </div>
 
-        <div class="personal-informations mt-16" v-if="!updated">
+        <div class="personal-informations mt-16">
             <h2 class="text-center">Informations personnelles</h2>
 
             <div class="inputs flex flex-col justify-center">
                 <input type="text" placeholder="Prénom" class="mt-4" v-model="account.profile.firstName" />
                 <input type="text" placeholder="Nom" class="mt-4" v-model="account.profile.lastName" />
-                <input placeholder="Date de naissance" class="mt-4" v-model="birthDateToDisplay" type="date" />
+                <input type="birthday" placeholder="Date de naissance" class="mt-4" v-model="birthDateToDisplay" />
             </div>
 
             <div class="flex justify-center mt-4">
                 <Button :text="'Mettre à jour'" class="cursor-pointer" @click="updateProfile" />
             </div>
-        </div>
-
-        <div class="flex flex-col justify-center my-12" v-if="updated">
-            <p class="text-center">Ton profil a bien été mis à jour !</p>
         </div>
 
         <Button secondary :text="'Se déconnecter'" class="cursor-pointer" @click="logout" />
@@ -62,8 +53,9 @@
 
 <script>
 
-import { getIsAdmin } from "@/api/Auth/getIsAdmin";
+import { getProfile } from "@/api/User/getProfile";
 import { getUser } from "@/api/User/getUser";
+import { patchProfile } from "@/api/User/patchProfile";
 import { patchUser } from "@/api/User/patchUser";
 import { deleteProfile } from "@/api/User/deleteProfile";
 import jwtDecode from "jwt-decode";
@@ -77,33 +69,31 @@ export default {
 
     data() {
         return {
-            isAdminOrRedactor: false,
-            updated: false,
             account: {
-                avatarAnimal: null,
-                avatarColor: null,
-                profile: {
-                },
+              avatarAnimal: null,
+              avatarColor: null,
+              profile: {
+              },
             },
             profile: {},
             birthDateToDisplay: "",
             animalLabels: {
-                hedgehog: "Hérisson",
-                squirrel: "Ecureuil",
-                fox: "Renard",
-                beaver: "Castor",
-                hummingbird: "Colibri",
-                kiwi: "Kiwi",
-                dragonfly: "Libellule",
-                butterfly: "Papillon",
-                fish: "Poisson",
-                pufferfish: "Poisson-Lune",
-                otter: "Loutre",
-                turtle: "Tortue",
-                lion: "Lion",
-                panda: "Panda",
-                monkey: "Singe",
-                unicorn: "Licorne"
+              hedgehog: "Hérisson",
+              squirrel: "Ecureuil",
+              fox: "Renard",
+              beaver: "Castor",
+              hummingbird: "Colibri",
+              kiwi: "Kiwi",
+              dragonfly: "Libellule",
+              butterfly: "Papillon",
+              fish: "Poisson",
+              pufferfish: "Poisson-Lune",
+              otter: "Loutre",
+              turtle: "Tortue",
+              lion: "Lion",
+              panda: "Panda",
+              monkey: "Singe",
+              unicorn: "Licorne"
             },
 
             animals: [
@@ -157,20 +147,10 @@ export default {
         },
 
         selectAnimal(animal) {
-            this.account.avatarAnimal = animal;
+          this.account.avatarAnimal = animal;
         },
         selectColor(color) {
-            this.account.avatarColor = color;
-        },
-
-        async checkIfAdminOrRedactor() {
-            try {
-              this.isAdminOrRedactor = await getIsAdmin();
-              console.log(this.isAdminOrRedactor);
-
-            } catch (error) {
-              console.error(error)
-            }
+          this.account.avatarColor = color;
         },
 
         async updateProfile() {
@@ -181,30 +161,22 @@ export default {
                 return;
             }
 
+            // compensate for -1 hour offset by new Date() -> toISOString
+            date.setHours(date.getHours() + 1);
+
             const isoDate = date.toISOString();
 
             this.account.profile.birthDate = isoDate;
 
-
-            /*
-            patchProfile(this.profile)
-                .then(() => {
-                    location.reload();
-                })
-                .catch((error) => {
-                    console.error('Erreur lors de la mise à jour du profil:', error);
-                });
-            */
-            try {
-                const token = localStorage.getItem("token");
-                const profileId = jwtDecode(token).userId;
-                await patchUser(profileId, this.account);
-                this.updated = true;
-            } catch (error) {
-                console.error('Erreur lors de la mise à jour du profil:', error);
-            }
-
-
+           
+           try {
+             const token = localStorage.getItem("token");
+             const profileId = jwtDecode(token).userId;
+             await patchUser(profileId, this.account);
+             location.reload();
+           } catch (error) {
+              console.error('Erreur lors de la mise à jour du profil:', error);
+           }
         },
 
         deleteAccount() {
@@ -224,6 +196,15 @@ export default {
 
     },
 
+    watch: {
+        birthDateToDisplay() {
+            // ISO to FR with good practice
+            const date = new Date(this.birthDateToDisplay);
+            const options = { year: "numeric", month: "long", day: "numeric" };
+            this.birthDateToDisplay = date.toLocaleDateString("fr-FR", options);
+        },
+    },
+
     async mounted() {
         if (localStorage.getItem("token") === null) {
             this.$router.push("/connexion");
@@ -231,18 +212,30 @@ export default {
             const token = localStorage.getItem("token");
             const profileId = jwtDecode(token).userId;
 
-            try {
-                const result = await getUser(profileId);
-                this.account = result;
-                this.birthDateToDisplay = this.account.profile.birthDate
+            /*
+            getProfile(profileId)
+                .then((profile) => {
+                    this.profile = profile;
+                    this.birthDateToDisplay = profile.birthDate;
+                })
+                .catch((error) => {
+                    console.error(
+                        "Erreur lors de la récupération du profil:",
+                        error
+                    );
+                });
 
-            } catch (error) {
-                console.error("Erreur lors de la récupération du profil:", error);
-            }
+            */
+          try {
+            const result = await getUser(profileId);
+            this.account = result;
+            this.birthDateToDisplay = this.account.profile.birthDate;
+
+          } catch (error) {
+            console.error("Erreur lors de la récupération du profil:", error); 
+           }
 
         }
-
-        this.checkIfAdminOrRedactor();
     },
 };
 </script>
