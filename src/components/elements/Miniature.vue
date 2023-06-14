@@ -7,7 +7,7 @@
             <p v-if="type === 'ressources' && article.id === 2">
                 <h3>Chez l'adulte</h3>
                 <ul>
-                    <li v-for="item, index of professionals">
+                    <li v-for="item, index of adultProfessionals">
                       <a :href="'ressources/professionnals/'+item.id"> {{item.firstName}} {{item.lastName}}
                       </a>
                     </li>
@@ -16,7 +16,7 @@
                 <p><br></p>
                 <h3>Chez l'enfant</h3>
                 <ul>
-                    <li v-for="item, index of professionals">
+                    <li v-for="item, index of childrenProfessionals">
                       <a :href="'ressources/professionnals/'+item.id"> {{item.firstName}} {{item.lastName}}
                       </a>
                     </li>
@@ -28,9 +28,13 @@
 </template>
 
 <script>
+import { getProfessionals } from '@/api/Professional/getProfessionals';
 export default {
     name: "Miniature",
 
+    async mounted() {
+      this.professionals = await getProfessionals()
+    },
     props: {
         article: {
             type: Object,
@@ -41,6 +45,11 @@ export default {
             required: false,
         },
     },
+    data() {
+      return{
+        professionals: []
+      }
+    },
 
     methods: {
         truncateHTML(html, maxLength) {
@@ -50,6 +59,14 @@ export default {
                 : truncated;
         },
     },
+    computed: {
+      adultProfessionals(){
+        return this.professionals.filter(item => item.specialtyId !== 2)
+      },
+      childrenProfessionals(){
+        return this.professionals.filter(item => item.specialtyId === 2)
+      },
+    }
 };
 </script>
 
