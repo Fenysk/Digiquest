@@ -1,14 +1,19 @@
 import axios from 'axios';
 
-export async function getIsAdmin(token) {
-    const apiUrl = 'https://digiquest-back.herokuapp.com';
+export async function getIsAdmin() {
+    //const apiUrl = 'https://digiquest-back.herokuapp.com';
+    const apiUrl = 'http://localhost:3000';
     
     try {
-        const response = await axios.get(`${apiUrl}/auth/isAdmin`, {
-            headers: {
-                Authorization: `${token}`,
-            },
-        });
+        const token = localStorage.getItem("token");
+        if (!token) {
+            throw new Error()
+        }
+
+        const config = {
+            headers: {"Authorization" : `Bearer ${token}`}
+        } 
+        const response = await axios.get(`${apiUrl}/auth/isAdmin`, config);
         const isAdmin = response.data;
         console.log('isAdmin :', isAdmin);
         return isAdmin;

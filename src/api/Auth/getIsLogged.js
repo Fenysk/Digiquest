@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function getIsLogged(articleId) {
+export async function getIsLogged() {
     const apiUrl = 'https://digiquest-back.herokuapp.com';
 
     try {

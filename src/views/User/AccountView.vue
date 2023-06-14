@@ -163,8 +163,13 @@ export default {
         },
 
         async checkIfAdminOrRedactor() {
-            this.isAdminOrRedactor = await getIsAdmin();
-            console.log(this.isAdminOrRedactor);
+            try {
+              this.isAdminOrRedactor = await getIsAdmin();
+              console.log(this.isAdminOrRedactor);
+
+            } catch (error) {
+              console.error(error)
+            }
         },
 
         async updateProfile() {
