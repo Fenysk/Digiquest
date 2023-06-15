@@ -140,7 +140,12 @@ export default {
 
     methods: {
         async checkIfAdmin() {
-            this.isAdmin = await getIsAdmin();
+            try {
+              this.isAdmin = await getIsAdmin();
+
+            } catch (error) {
+              
+            }
             /*
             if (this.isAdmin !== "OK") {
                 this.isAdmin = await getIsRedactor();
@@ -195,10 +200,13 @@ export default {
                 .then(() => {
                     localStorage.removeItem("token");
                     localStorage.removeItem("profileId");
-                    this.$router.push("/");
+                    
                     this.$nextTick(() => {
-                        window.location.reload();
+                      window.location.reload();
+                      this.$router.push("/");
                     });
+                    
+                   location.replace("/");
                 })
                 .catch((error) => {
                     console.error('Erreur lors de la suppression du profil:', error);
@@ -217,6 +225,7 @@ export default {
     },
 
     async mounted() {
+        console.log('mount')
         await this.checkIfAdmin();
 
         if (localStorage.getItem("token") === null) {
