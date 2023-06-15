@@ -148,7 +148,7 @@ export default {
                 },
                 {
                     // Question 2 d'un diagnostic de TDAH
-                    question: "Zut, j'ai encore oublié de faire mes dévoirs!",
+                    question: "Zut, j'ai encore oublié de faire mes devoirs!",
                     answers: ["Je me souviens toujours de ce que je dois faire", "Ca m'arrive d'oublier de faire des choses", "J'oublie souvent des tâches", "je suis très tête-en-l'air, j'oublie toujours tout"]
                 },
                 {
@@ -272,7 +272,7 @@ export default {
             const score = total / (this.scenario.length * 5) * 100
             this.result = `Tu as un score de ${score.toFixed(0)} /100`
             if (total > this.scenario.length * 3.5) {
-                this.comment = "Il y a de bonne chances que tu ait un TDA-H: tu devrais voir avec tes parents si tu devrais voir un spécialiste.";
+                this.comment = "Il y a de bonnes chances que tu aies un TDA-H: tu devrais voir avec tes parents si tu devrais voir un spécialiste.";
             } else if (total > this.scenario.length * 2.5) {
                 this.comment = "Ca peut être le signe d'un TDA-H; vois avec tes parents si tu devrais voir un spécialiste.";
             } else {
