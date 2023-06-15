@@ -85,7 +85,7 @@ export default {
     mounted() {
         getArticles()
             .then((articles) => {
-                this.articles = articles.slice(-6).reverse();
+                this.articles = articles.slice(-3).reverse();
             })
             .catch((error) => {
                 console.error('Erreur lors de la récupération des articles:', error);
