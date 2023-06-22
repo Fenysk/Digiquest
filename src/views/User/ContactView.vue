@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import { getProfile } from '@/api/User/getProfile';
 import jwtDecode from 'jwt-decode';
 
 import Button from "@/components/elements/Button.vue";
@@ -75,6 +74,8 @@ export default {
             const token = localStorage.getItem('token');
             const userId = jwtDecode(token).userId;
 
+
+            /*
             getProfile(userId)
                 .then((user) => {
                     this.user = user;
@@ -82,6 +83,7 @@ export default {
                 .catch((error) => {
                     console.error('Erreur lors de la récupération du profil:', error);
                 });
+            */
         }
     },
 }

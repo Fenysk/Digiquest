@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 export async function postLogin(username, password) {
-    const apiUrl = 'https://digiquest-back.herokuapp.com';
 
     try {
-        const response = await axios.post(`${apiUrl}/login`, {
+        const response = await axios.post(`${process.env.VUE_APP_API_URL}/auth/login`, {
             username,
             password
         });

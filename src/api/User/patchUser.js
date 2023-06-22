@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export async function patchUser(accountId, data) {
-  const apiUrl = 'https://digiquest-back.herokuapp.com';
 
   try {
 
@@ -21,7 +20,7 @@ export async function patchUser(accountId, data) {
     */
 
     const response = await axios.patch(
-      `${apiUrl}/user/${accountId}`, 
+      `${process.env.VUE_APP_API_URL}/users/${accountId}`, 
       payload,
       config
     );

@@ -1,10 +1,18 @@
 import axios from 'axios';
 
 export async function deletePendingTest(id) {
-    const apiUrl = 'https://digiquest-back.herokuapp.com';
     
     try {
-        const response = await axios.delete(`${apiUrl}/pendingTest/${id}`);
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error()
+        }
+
+        const config = {
+          headers: { "Authorization": `Bearer ${token}` }
+        }
+
+        const response = await axios.delete(`${process.env.VUE_APP_API_URL}/pendingTests/${id}`, config);
         const result = response.data;
         console.log('PendingTest supprimé', result);
         return result;

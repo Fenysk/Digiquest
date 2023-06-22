@@ -55,7 +55,6 @@ import Button from "@/components/elements/Button.vue";
 
 import { getComments } from "@/api/Comment/getComments";
 import { postComment } from "@/api/Comment/postComment";
-import { getProfile } from "@/api/User/getProfile";
 
 export default {
     name: "Comments",
@@ -132,22 +131,15 @@ export default {
             }
         },
 
-        getComments(articleId) {
-            getComments(articleId)
-                .then(async (comments) => {
-                    const newComments = await Promise.all(comments.map(async (comment) => {
-                        const profile = await getProfile(comment.accountId);
-                        return { ...comment, avatarAnimal: profile.avatarAnimal };
-                    }));
-
-                    this.comments = newComments;
-                })
-                .catch((error) => {
-                    console.error(
-                        "Erreur lors de la récupération des commentaires:",
-                        error
-                    );
-                });
+        async getComments(articleId) {
+            try {
+                this.comments = await getComments(articleId);
+            } catch (error) {
+                console.error(
+                    "Erreur lors de la récupération des commentaires:",
+                    error
+                );
+            }
         },
 
     },

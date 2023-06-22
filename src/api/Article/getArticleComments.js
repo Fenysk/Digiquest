@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 export async function getArticleComments(articleId) {
-    const apiUrl = 'https://digiquest-back.herokuapp.com';
     
     try {
-        const response = await axios.get(`${apiUrl}/article/${articleId}/comments`);
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/articles/${articleId}/comments`);
         const comments = response.data;
         console.log('Commentaires récuperés :', comments);
         return comments;

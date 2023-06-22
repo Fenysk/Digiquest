@@ -102,6 +102,17 @@ export default {
         },
 
         async login() {
+          try {
+            const token = await postLogin(this.user.username,this.user.password);
+            localStorage.setItem('token', token);
+            this.token = token;
+            this.$nextTick(() => {
+                window.location.reload();
+            });
+          } catch(error) {
+              console.log(error);
+          }
+            /*
             const apiUrl = 'https://digiquest-back.herokuapp.com';
             axios.post(`${apiUrl}/login`,
                 {
@@ -124,6 +135,8 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 });
+
+            */
         },
 
         async signup() {

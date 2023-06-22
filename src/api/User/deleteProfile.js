@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 export async function deleteProfile(userid) {
-    const apiUrl = 'https://digiquest-back.herokuapp.com';
     
     try {
-        const response = await axios.delete(`${apiUrl}/profile/${userid}`);
+        const response = await axios.delete(`${process.env.VUE_APP_API_URL}/users/${userid}`);
         const message = response.data;
         console.log('Message récupéré :', message);
         return message;

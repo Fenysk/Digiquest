@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 export async function getArticles() {
-    const apiUrl = 'https://digiquest-back.herokuapp.com';
     
     try {
-        const response = await axios.get(`${apiUrl}/articles`);
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/articles`);
         const articles = response.data;
         console.log('Articles récupérés :', articles);
         return articles;

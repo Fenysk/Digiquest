@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export async function getUser(accountId) {
-  const apiUrl = 'https://digiquest-back.herokuapp.com';
 
 
   try {
@@ -12,7 +11,7 @@ export async function getUser(accountId) {
     const config = {
       headers: { "Authorization": `Bearer ${token}` }
     }
-    const response = await axios.get(`${apiUrl}/user/${accountId}`, config);
+    const response = await axios.get(`${process.env.VUE_APP_API_URL}/users/${accountId}`, config);
     const user = response.data;
     console.log('Profil récupéré :', user);
     return user;

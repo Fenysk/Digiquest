@@ -233,21 +233,6 @@ export default {
         } else {
             const token = localStorage.getItem("token");
             const profileId = jwtDecode(token).userId;
-
-            /*
-            getProfile(profileId)
-                .then((profile) => {
-                    this.profile = profile;
-                    this.birthDateToDisplay = profile.birthDate;
-                })
-                .catch((error) => {
-                    console.error(
-                        "Erreur lors de la récupération du profil:",
-                        error
-                    );
-                });
-
-            */
           try {
             const result = await getUser(profileId);
             this.account = result;

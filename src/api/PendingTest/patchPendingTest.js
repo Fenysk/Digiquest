@@ -1,14 +1,22 @@
 import axios from 'axios';
 
 export async function patchPendingTest(id, payload) {
-  const apiUrl = 'https://digiquest-back.herokuapp.com';
-    
-    try {
-        const response = await axios.patch(`${apiUrl}/pendingTest/${id}`, payload);
-        const result = response.data;
-        return result;
-    } catch (error) {
-        console.error('Erreur lors de l\'enregistrement du test interrompu :', error);
-        throw error;
+
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error()
     }
+
+    const config = {
+      headers: { "Authorization": `Bearer ${token}` }
+    }
+
+    const response = await axios.patch(`${process.env.VUE_APP_API_URL}/pendingTests/${id}`, payload, config);
+    const result = response.data;
+    return result;
+  } catch (error) {
+    console.error('Erreur lors de l\'enregistrement du test interrompu :', error);
+    throw error;
+  }
 }

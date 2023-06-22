@@ -43,6 +43,7 @@
 import axios from 'axios';
 import { VueEditor } from "vue3-editor";
 import  { getTags } from "@/api/Tags/getTags";
+import  { postArticle } from "@/api/Article/postArticle";
 
 export default {
     components: { VueEditor },
@@ -95,21 +96,16 @@ export default {
           }
         },
 
-        createArticle() {
-            const apiUrl = 'https://digiquest-back.herokuapp.com';
-            axios.post(
-                `${apiUrl}/article`,
-                this.article
-            )
-                .then(response => {
-                    console.log('Nouvel article créé:', response.data);
-                    this.$router.push('/blog/article/' + response.data.id);
-                    // Faire quelque chose avec la réponse, par exemple rediriger vers la page de l'article créé
-                })
-                .catch(error => {
-                    console.error('Erreur lors de la création de l\'article:', error);
-                    // Gérer l'erreur, afficher un message à l'utilisateur, etc.
-                });
+        async createArticle() {
+            try {
+                const response = await postArticle(this.article);
+                console.log('Nouvel article créé:', response.data);
+                this.$router.push('/blog/article/' + response.data.id);
+                // Faire quelque chose avec la réponse, par exemple rediriger vers la page de l'article créé
+            } catch (error) {
+                console.error('Erreur lors de la création de l\'article:', error);
+                // Gérer l'erreur, afficher un message à l'utilisateur, etc.
+            }
         }
     }
 };
