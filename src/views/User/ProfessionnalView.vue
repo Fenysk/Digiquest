@@ -15,14 +15,16 @@
         <h3 class="text-center mt-24">Expertises et actes</h3>
         <ul class="flex justify-center mt-8">
           <li class="flex">
-            <p class="ml-8">{{ professional.specialty.label }}</p>
+            <p class="ml-8">
+              <div class="flex">
+
+                <div v-for="item, index of professional.specialties" :key="index">
+                  <span v-if="index >= 1">&nbsp; - &nbsp;</span>
+                  <span>{{ item.label }}</span>
+                </div>
+              </div>
+            </p>
           </li>
-          <!--
-            <li class="flex" v-for="specialitie in professionnal.specialities" :key="specialitie.id">
-                <p class="ml-8">{{ specialitie }}</p>
-                <p v-if="professionnal.specialities.length > 1 && professionnal.specialities.indexOf(specialitie) !== professionnal.specialities.length - 1" class="ml-6">—</p>
-            </li>
-          -->
         </ul>
 
         <div class="mt-24 flex flex-row gap-16">
@@ -64,10 +66,10 @@ export default {
               description: '',
               address: '',
               phone: '',
-              specialty: {
+              specialties: [{
                 id: 0,
                 label: ''
-              }
+              }]
             },
 
         }
