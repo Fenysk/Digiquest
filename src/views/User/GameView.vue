@@ -94,11 +94,9 @@
 <script>
 //import Colibri from '@/components/elements/Colibri.vue'
 import Button from '@/components/elements/Button.vue'
+import { getPendingTestResult } from '@/api/TestResult/getPendingTestResult';
 import { postTestResult } from "@/api/TestResult/postTestResult";
-import { getAccountPendingTests } from "@/api/PendingTest/getAccountPendingTests";
-import { postPendingTest } from "@/api/PendingTest/postPendingTest";
-import { patchPendingTest } from "@/api/PendingTest/patchPendingTest";
-import { deletePendingTest } from "@/api/PendingTest/deletePendingTest";
+import { patchTestResult } from "@/api/TestResult/patchTestResult";
 import { getIsLogged, isLogged } from '@/api/Auth/getIsLogged';
 import jwtDecode from "jwt-decode";
 
@@ -122,15 +120,15 @@ export default {
         try {
             const token = localStorage.getItem('token');
             const userId = jwtDecode(token).userId;
-            const tests = await getAccountPendingTests(userId);
-            if (!!tests && tests.length > 0) {
-                // get [0] for now
-                this.pendingTestId = tests[0].id;
-                this.answers = JSON.parse(tests[0].data);
-                this.currentStep = this.answers.length;
+            const pendingTest = await getPendingTestResult(userId);
+            if (!!pendingTest) {
+              this.pendingTestId = pendingTest.id;
+              this.answers = JSON.parse(pendingTest.data);
+              this.currentStep = this.answers.length;
             }
         } catch (error) {
-            this.$router.push('/connexion');
+            console.log(error)
+            //this.$router.push('/connexion');
         }
 
 
@@ -240,13 +238,13 @@ export default {
             const token = localStorage.getItem('token');
             const userId = jwtDecode(token).userId;
             const payload = {
-                accountId: userId,
+                profileId: userId,
                 data: JSON.stringify(this.answers)
             }
             if (!!this.pendingTestId) {
-                await patchPendingTest(this.pendingTestId, payload);
+                await patchTestResult(this.pendingTestId, payload);
             } else {
-                await postPendingTest(payload);
+                await postTestResult(payload);
             }
             this.$router.push('/');
 
@@ -254,15 +252,19 @@ export default {
         async endGame() {
             const token = localStorage.getItem('token');
             const userId = jwtDecode(token).userId;
+            const date = (new Date()).toISOString()
             const payload = {
-                accountId: userId,
-                data: JSON.stringify(this.answers)
+                profileId: userId,
+                data: JSON.stringify(this.answers),
+                completedAt: date
             }
-            const response = await postTestResult(payload);
 
-            // delete pending test that was loaded, if exists
             if (!!this.pendingTestId) {
-                const delteResult = await deletePendingTest(this.pendingTestId);
+                console.log('patch')
+                await patchTestResult(this.pendingTestId, payload);
+            } else {
+                console.log('post')
+                await postTestResult(payload);
             }
 
             const total = this.answers.reduce((stack, current) => {
